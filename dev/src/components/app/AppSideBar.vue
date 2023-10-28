@@ -1,5 +1,20 @@
+<template>
+  <aside id="side-bar">
+
+    <div class="hotel-photo"></div>
+
+    <h2 class="hotel-name">{{ hotelName }}</h2>
+
+    <StarsRating></StarsRating>
+
+    <AppNavbar></AppNavbar>
+
+  </aside>
+</template>
+
+
 <script setup lang="ts">
-  import StarsRating from "../side-bar/StarsRating.vue";
+  import StarsRating from "@/components/side-bar/StarsRating.vue";
   import AppNavbar from "./AppNavbar.vue";
 </script>
 
@@ -16,21 +31,6 @@
   }
 
 </script>
-
-
-<template>
-  <aside id="side-bar">
-
-    <div class="hotel-photo"></div>
-
-    <h2 class="hotel-name">{{ hotelName }}</h2>
-
-    <StarsRating></StarsRating>
-
-    <AppNavbar></AppNavbar>
-
-  </aside>
-</template>
 
 
 

@@ -11,7 +11,6 @@ const router = createRouter({
       component: HomeView
     },
 
-
     {
       path: "/personal",
       name: "personal",

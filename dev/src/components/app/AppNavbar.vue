@@ -1,3 +1,18 @@
+<template>
+  
+  <nav id="app-navbar">
+    <router-link :to="item.url" class="nav-item" v-for="item in ITEMS">
+      <div class="icon">
+        <img :src="getIconSrc(item.icon)" alt=""/>
+      </div>
+      <div class="title">{{ item.title }}</div>
+    </router-link>
+  </nav>
+
+</template>
+
+
+
 <script lang="ts">
 
   const ITEMS = [ 
@@ -30,20 +45,6 @@
 </script>
 
 
-<template>
-  
-  <nav id="app-navbar">
-    <div class="nav-item" v-for="item in ITEMS">
-      <div class="icon">
-        <img :src="getIconSrc(item.icon)" alt=""/>
-      </div>
-      <div class="title">{{ item.title }}</div>
-    </div>
-  </nav>
-
-</template>
-
-
 
 <style scoped lang="scss">
   @use "../../assets/styles/vars.scss";
@@ -61,6 +62,9 @@
       align-items: center;
       width: 100%;
       cursor: pointer;
+      text-decoration: none;
+
+      &:visited {color: inherit}
 
 
       .icon {
@@ -80,7 +84,59 @@
       .title {
         color: vars.$highlight--color;
       }
+
+
+
+      &.router-link-active {
+        border-radius: 20px;
+        position: relative;
+        cursor: default;
+
+        &::after, &:before {
+          content: "";
+          position: absolute;
+          display: block;
+          border-radius: 20px;
+          background-color: transparent;
+          animation: border 0.3s ease forwards;
+        }
+
+        &:before {
+          border-top: 1px solid #005382;
+          border-left: 1px solid #005382;
+          border-bottom: 1px solid transparent;
+          border-right: 1px solid transparent;
+          top: 0;
+          left: 0;
+        }
+
+        &:after {
+          border-bottom: 1px solid #005382;
+          border-right: 1px solid #005382;
+          border-top: 1px solid transparent;
+          border-left: 1px solid transparent;
+          bottom: 0;
+          right: 0;
+        }
+      }
+
+
+
     }
   }
+
+
+
+
+@keyframes border {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+  }
+}
 
 </style>

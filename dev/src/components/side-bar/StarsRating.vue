@@ -14,7 +14,7 @@
 
 
 <script lang="ts">
-  import IconStar from '../icons/IconStar.vue';
+  import IconStar from '@/components/icons/IconStar.vue';
 
   export default {
     data() {

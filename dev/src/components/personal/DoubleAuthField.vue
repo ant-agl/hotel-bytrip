@@ -1,5 +1,25 @@
+<template>
+
+  <div class="field">
+
+    <label>Двойная аутентификация</label>
+
+    <CustomSelect 
+      :options="$data.options"
+      class="field"
+      name="doubleAuth"
+      @change="$props.onChange($event)"
+    />
+
+
+  </div>
+
+</template>
+
+
+
 <script setup lang="ts">
-  import CustomSelect from '../CustomSelect.vue';
+  import CustomSelect from '@/components/CustomSelect.vue';
 </script>
 
 
@@ -15,27 +35,10 @@
           ['email', 'Адрес электронной почты']
         ]
 
-
       }
-    }
+    },
+
+    props: ['onChange']
   }
 
 </script>
-
-
-
-<template>
-
-  <div class="field">
-
-    <label>Двойная аутентификация</label>
-
-    <CustomSelect 
-      :options="$data.options"
-      class="field"
-    />
-
-
-  </div>
-
-</template>
