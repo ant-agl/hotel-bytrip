@@ -1,25 +1,21 @@
-<script lang="ts">
-
-  export default {
-    props: ['user']
-  }
-  
-</script>
-
-
 <template>
-  <div class="field email-field">
-    <label>Почта</label>
-    
-    <div class="container">
-      <input 
-        type="email"
-        placeholder="Почта"
-        v-model="$props.user.email"
-      />
+  <InputField
+    fieldId="email"
+    type="email"
+    placeholder="Почта"
+    title= "Почта"
+    v-bind="$props"
+  >
 
+    <template v-slot:button>
       <button class="action-button">Подтвердить</button>
-    </div>
-  </div>
+    </template>
+
+  </InputField>
 
 </template>
+
+
+<script setup lang="ts">
+  import InputField from './InputField.vue';
+</script>

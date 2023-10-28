@@ -1,10 +1,43 @@
+<template>
+  
+  <header id="app-header">
+
+    <div class="container">
+      <AppLogo></AppLogo>  
+    
+      <div class="buttons">
+        <button class="open-notifications">
+          <IconNotifications/>
+        </button>
+
+        <button class="open-chats">
+          <IconChats/>
+        </button>
+
+        <button 
+          class="open-profile show-drop-down-menu" 
+          :class="{active: dropDownMenuIsShowed}"
+          @click="showMenu()">
+          <IconProfile/>
+        </button>
+
+      </div>
+    </div>
+
+    <AppDropDownMenu v-show="dropDownMenuIsShowed" v-bind="{user}"/>
+
+  </header>
+</template>
+
+
+
 <script setup lang="ts">
   import AppLogo from "./AppLogo.vue";
   import AppDropDownMenu from "./AppDropDownMenu.vue";
 
-  import IconNotifications from "../icons/IconNotifications.vue";
-  import IconChats from "../icons/IconChats.vue";
-  import IconProfile from "../icons/IconProfile.vue";
+  import IconNotifications from "@/components/icons/IconNotifications.vue";
+  import IconChats from "@/components/icons/IconChats.vue";
+  import IconProfile from "@/components/icons/IconProfile.vue";
   
 </script>
 
@@ -41,42 +74,19 @@
 
 
 
-<template>
-  
-  <header id="app-header">
-
-    <div class="container">
-      <AppLogo></AppLogo>  
-    
-      <div class="buttons">
-        <button class="open-notifications">
-          <IconNotifications/>
-        </button>
-
-        <button class="open-chats">
-          <IconChats/>
-        </button>
-
-        <button 
-          class="open-profile show-drop-down-menu" 
-          :class="{active: dropDownMenuIsShowed}"
-          @click="showMenu()">
-          <IconProfile/>
-        </button>
-
-      </div>
-    </div>
-
-    <AppDropDownMenu v-if="dropDownMenuIsShowed" v-bind="{user}"/>
-
-  </header>
-</template>
-
-
-
 <style scoped lang="scss">
 
   @use "../../assets/styles/vars.scss";
+
+  .drop-down-menu-fade-enter-active,
+  .drop-down-menu-fade-leave-active {
+    transition: opacity 100ms ease;
+  }
+
+  .drop-down-menu-fade-enter-from,
+  .drop-down-menu-fade-leave-to {
+    opacity: 0;
+  } 
 
   #app-header {
     display: flex;

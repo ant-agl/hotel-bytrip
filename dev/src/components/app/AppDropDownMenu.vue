@@ -1,8 +1,41 @@
+<template>
+
+  <Transition name="drop-down-menu-fade">
+    <div id="app-drop-down-menu">
+
+      <router-link to="/personal" class="open-profile">
+        {{ user.name }}
+      </router-link>
+
+      <a class="exit" @click="showModal()">Выйти</a>
+
+
+      <AppModal 
+        :showed="exitModalIsShowed" 
+        v-bind:title=" `Выйти из профиля?` "
+        @close="hideModal()"
+        class-name="exit-modal">
+
+        <template v-slot:body>
+          <div class="message">Вы действительно хотите выйти из вашего профиля?</div>
+
+          <div class="buttons">
+            <button class="no" @click="hideModal()">Отмена</button>
+            <button class="yes">Выйти</button>
+          </div>
+        </template>
+
+
+      </AppModal>
+
+    </div>
+  </Transition>
+
+</template>
+
+
 <script setup lang="ts">
-  import { Transition } from 'vue';
-  import Modal from '../Modal.vue';
-  import IconExit from '../icons/IconExit.vue';
-  import IconProfileVue from '../icons/IconProfile.vue';
+  import AppModal from './AppModal.vue';
 </script>
 
 
@@ -44,8 +77,8 @@
         let offsetTop = headerContainerCors?.height;
         let offsetRight = document.documentElement.clientWidth - Number(headerContainerCors?.right);
         
-        this.$el.style.top = offsetTop + 'px'
-        this.$el.style.right = offsetRight + 'px'
+        this.$el.style.top = (Number(offsetTop) - 10) + 'px'
+        this.$el.style.right = (offsetRight + 20) + 'px'
       }
     }
   }
@@ -53,94 +86,32 @@
 
 
 
-<template>
-
-  <div id="app-drop-down-menu">
-    <button class="open-profile">
-
-      <div class="icon">
-        <IconProfileVue />
-      </div>
-
-      <span>{{ user.name }}</span>
-
-    </button>
-
-
-    <button class="exit" @click="showModal()">
-
-      <div class="icon">
-        <IconExit />
-      </div>
-
-      <span>Выйти</span>
-
-    </button>
-
-
-          
-    <Transition name="modal-fade">
-      <Modal v-if="exitModalIsShowed" 
-        @close="hideModal()"
-        class-name="exit-modal">
-
-        <template v-slot:header>
-          <span class="title">Выйти из профиля?</span>
-        </template>
-
-        <template v-slot:body>
-          <div class="message">Вы действительно хотите выйти из вашего профиля?</div>
-
-          <div class="buttons">
-            <button class="no" @click="hideModal()">Отмена</button>
-            <button class="yes">Выйти</button>
-          </div>
-        </template>
-
-
-      </Modal>
-    </Transition>
-
-  </div>
-
-</template>
-
-
-
 <style lang="scss">
   @use "../../assets/styles/vars.scss";
 
-  
-  .modal-fade-enter-active,
-  .modal-fade-leave-active {
-    transition: opacity 0.2s ease;
-  }
-
-  .modal-fade-enter-from,
-  .modal-fade-leave-to {
-    opacity: 0;
-  } 
 
   #app-drop-down-menu {
     position: absolute;
     background: white;
-    box-shadow: 0 20px 40px #0000004d;
-    width: 280px;
-    border-radius: 0 0 15px 15px;
+    box-shadow: 0 0 3px 1px #0000004d;
+    width: 200px;
+    border-radius: 10px;
     overflow: hidden;
 
-    & > button {
-      padding: .4em 1em;
-      font-size: .95em;
+    & > a {
+      padding: .4em 1.3em;
+      font-size: .8em;
+      line-height: 1.4em;
       width: 100%;
+      text-decoration: none;
+      &:visited {color: inherit}
 
       display: flex;
       gap: .5em;
       align-items: center;
       text-align: left;
-      line-height: 1.5em;
       transition: 200ms ease all;
-      height: 56px;
+      height: 44px;
       cursor: pointer;
 
       &:hover {
@@ -161,22 +132,18 @@
   }
 
   .exit-modal {
-    
-    .title {
-      font-weight: bold;
-    }
 
     .buttons {
       display: flex;
-      gap: 1%;
-      margin-top: 1.5em;
+      gap: 6%;
+      margin-top: 2em;
      
       button {
         padding: .8em;
         font-size: .9em;
         border-radius: 15px;
         transition: 200ms ease all;
-        width: 49%;
+        width: 47%;
         cursor: pointer;
       
         &.no {

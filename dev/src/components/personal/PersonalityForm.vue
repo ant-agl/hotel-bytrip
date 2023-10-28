@@ -1,5 +1,7 @@
 <script lang="ts">
   import {ref} from "vue";
+  import AppModalVue from "@/components/app/AppModal.vue";
+  import InputField from "./InputField.vue";
 
   const FIELDS = [
     {fieldId: "last_name", label: "Фамилия"},
@@ -9,6 +11,7 @@
 
   const data = { 
     FIELDS,
+    successModalIsShowed: ref(false),
     hasChanges: ref(false),
     user: {last_name: "Гетьман", first_name: "Михаил", middle_name: "Евгеньевич"},
     unchangedUser: {last_name: "Гетьман", first_name: "Михаил", middle_name: "Евгеньевич"} //only for test
@@ -17,17 +20,28 @@
 
   export default {
     data() {
-      return data
+        return data;
     },
-
     methods: {
-      submit
-    },
+      submit,
+        
+      hideModal() {
+        this.successModalIsShowed = false
+      },
 
+
+      onChange: function(event:any) {
+        let {value, name: fieldId} = event.target; 
+        this.user[fieldId] = value;
+        this.$forceUpdate()
+      }
+
+    },
     updated() {
-      data.hasChanges.value = checkChanges()
-    }
-  }
+        data.hasChanges.value = checkChanges();
+    },
+    components: { AppModalVue, InputField }
+}
 
 
   function checkChanges() {
@@ -44,7 +58,7 @@
   
   function submit() {
     if(!data.hasChanges.value) return;
-    alert("Сохранение данных")
+    data.successModalIsShowed.value = true;
   }
 
 
@@ -55,19 +69,15 @@
 <template>
   <form id="personality-form">
     <h2>Личные данные</h2>
-
-    <div class="field" v-for="field in FIELDS">
-    
-      <label>{{ field.label }}</label>
-      
-      <input 
-        type="name"
-        :placeholder="field.label"
-        v-model="user[field.fieldId]"
-        maxlength="100"
-      />
-    
-    </div>
+  
+    <InputField v-for="field in FIELDS"
+      :fieldId="field.fieldId"
+      :user="user"
+      :onChange="onChange"
+      :title="field.label"
+      :placeholder="field.label"
+      type="name"
+    />
 
     <button 
       class="save"
@@ -76,6 +86,12 @@
 
       Сохранить личные данные
     </button>
+
+    <AppModalVue
+      :showed="successModalIsShowed"
+      :title="`Данные сохранены`"
+      @close="hideModal()">
+    </AppModalVue>
 
 
   </form>
