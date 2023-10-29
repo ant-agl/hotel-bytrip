@@ -4,7 +4,6 @@
   <main id="app-content">
     <div class="container">
       <AppSideBar />
-      <!-- <RouterView /> -->
       <router-view v-slot="{ Component, route }">
         <Transition appear>
           <component :is="Component" :key="route.name" />
@@ -15,7 +14,6 @@
 </template>
 
 <script setup>
-import { RouterView } from "vue-router";
 import AppHeader from "@/components/app/AppHeader.vue";
 import AppSideBar from "@/components/app/AppSideBar.vue";
 import "@/assets/styles/global.scss";
