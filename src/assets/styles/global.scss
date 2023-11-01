@@ -1,0 +1,90 @@
+@use "./vars.scss";
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/src/assets/fonts/Montserrat.ttf");
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border: none;
+  background: none;
+  box-sizing: border-box;
+  font-family: "Montserrat";
+  color: var(--color-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+h2 {
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+body {
+  background: url("/src/assets/img/page-bg.png") top center repeat-y #21527e;
+  background-size: 100%;
+}
+
+#app {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#app-header, #app-content {
+  & > .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: vars.$app_content--gap;
+    width: vars.$app_content--width;
+  }
+}
+
+
+#app-content {
+  margin: vars.$app_header--height * 2 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: vars.$app_content--gap;
+}
+
+.router-view {
+  width: calc(100% - vars.$app_content--gap - vars.$side_bar--width);
+  min-height: 10vh;
+}
+
+.link {
+  text-decoration: none;
+  color: vars.$highlight--color;
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 0;
+    height: 1px;
+    background-color: vars.$highlight--color;
+    transition: 0.2s;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+img {
+  max-width: 100%;
+}
