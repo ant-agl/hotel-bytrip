@@ -1,7 +1,13 @@
 <template>
   
   <nav id="app-navbar">
-    <router-link :to="item.url" class="nav-item" v-for="item in ITEMS">
+    <router-link 
+      :to="item.url" 
+      :key="Math.random()"
+      class="nav-item" 
+      
+      v-for="item in ITEMS">
+      
       <div class="icon">
         <img :src="getIconSrc(item.icon)" alt=""/>
       </div>
@@ -60,8 +66,10 @@
       gap: .5rem;
       padding: 1rem;
       align-items: center;
+      position: relative;
       width: 100%;
       cursor: pointer;
+      transition: .5s ease all;
       text-decoration: none;
 
       &:visited {color: inherit}
@@ -90,7 +98,8 @@
       &.router-link-active {
         border-radius: 20px;
         position: relative;
-        cursor: default;
+        cursor: pointer;
+
 
         &::after, &:before {
           content: "";
@@ -120,8 +129,26 @@
         }
       }
 
+      &:not(.router-link-active) {
+        
+        &:after {
+          position: absolute;
+          content: '';
+          bottom: 0;
+          display: block;
+          height: 1px;
+          background: vars.$highlight--color; 
+          border-radius: 4px; 
+          width: 0;
+          transition: 0.3s;
+          left: 50%;
+          transform: translateX(-50%);
+        }
 
-
+        &:hover:after {
+          width: 100%;
+        }
+      }
     }
   }
 

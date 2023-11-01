@@ -101,13 +101,9 @@
     justify-content: center;
 
     .modal {
-      display: flex;
-      flex-direction: column;
-      gap: 2em;
       background: white;
       border-radius: 10px;
       min-width: 60vh;
-      min-height: 6em;
       padding: 1.2em;
 
       header {

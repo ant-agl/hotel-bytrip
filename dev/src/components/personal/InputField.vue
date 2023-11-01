@@ -39,7 +39,6 @@
     props: ['user', 'onChange', 'title', 'placeholder', 'fieldId', "type", 'disabled'],
 
     data() {
-      console.log(this.$props)
 
       return {
         inputType: this.$props.type,

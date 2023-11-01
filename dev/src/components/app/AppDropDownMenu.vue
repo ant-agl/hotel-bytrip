@@ -4,29 +4,10 @@
     <div id="app-drop-down-menu">
 
       <router-link to="/personal" class="open-profile">
-        {{ user.name }}
+        {{ $props.user.name }}
       </router-link>
 
-      <a class="exit" @click="showModal()">Выйти</a>
-
-
-      <AppModal 
-        :showed="exitModalIsShowed" 
-        v-bind:title=" `Выйти из профиля?` "
-        @close="hideModal()"
-        class-name="exit-modal">
-
-        <template v-slot:body>
-          <div class="message">Вы действительно хотите выйти из вашего профиля?</div>
-
-          <div class="buttons">
-            <button class="no" @click="hideModal()">Отмена</button>
-            <button class="yes">Выйти</button>
-          </div>
-        </template>
-
-
-      </AppModal>
+      <a class="exit" @click="$props.showModal">Выйти</a>
 
     </div>
   </Transition>
@@ -34,24 +15,13 @@
 </template>
 
 
-<script setup lang="ts">
-  import AppModal from './AppModal.vue';
-</script>
-
-
-
 <script lang="ts">
 
   export default {
-    props: ['user'],
-
-    data() {
-      return {
-        exitModalIsShowed: false
-      }
-    },
+    props: ['user', 'showModal'],
 
     mounted() {
+      console.log(this.$props)
       this.fitPositions();
       window.addEventListener("resize", this.fitPositions)
     },
@@ -62,14 +32,6 @@
 
 
     methods: {
-      showModal() {
-        this.exitModalIsShowed = true
-      },
-
-      hideModal() {
-        this.exitModalIsShowed = false
-      },
-
       fitPositions() {
         let headerContainer = document.querySelector("#app-header .container")
         let headerContainerCors = headerContainer?.getBoundingClientRect();

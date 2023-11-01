@@ -24,7 +24,27 @@
       </div>
     </div>
 
-    <AppDropDownMenu v-show="dropDownMenuIsShowed" v-bind="{user}"/>
+    <AppDropDownMenu v-show="dropDownMenuIsShowed" :user="user" :show-modal="showModal"></AppDropDownMenu>
+
+
+
+    <AppModal 
+      :showed="exitModalIsShowed" 
+      :title=" `Выйти из профиля?` "
+      @close="hideModal()"
+      class-name="exit-modal">
+
+      <template v-slot:body>
+        <div class="message">Вы действительно хотите выйти из вашего профиля?</div>
+
+        <div class="buttons">
+          <button class="no" @click="hideModal()">Отмена</button>
+          <button class="yes">Выйти</button>
+        </div>
+      </template>
+
+
+    </AppModal>
 
   </header>
 </template>
@@ -34,6 +54,7 @@
 <script setup lang="ts">
   import AppLogo from "./AppLogo.vue";
   import AppDropDownMenu from "./AppDropDownMenu.vue";
+  import AppModal from "./AppModal.vue";
 
   import IconNotifications from "@/components/icons/IconNotifications.vue";
   import IconChats from "@/components/icons/IconChats.vue";
@@ -49,7 +70,8 @@
     data() {
       return {
         dropDownMenuIsShowed: false,
-        user: {name: "Гетьман Михаил Евгеньевич"}
+        user: {name: "Гетьман Михаил Евгеньевич"},
+        exitModalIsShowed: false,
       }
     },
 
@@ -58,14 +80,21 @@
         this.dropDownMenuIsShowed = !this.dropDownMenuIsShowed
         
         const handler = (e:any) => {
-          if(e.target?.closest("#app-drop-down-menu") || 
-             e.target?.closest(".show-drop-down-menu") ) return;
+          if( e.target?.closest(".show-drop-down-menu") ) return;
 
           this.dropDownMenuIsShowed = false;
           document.removeEventListener('click', handler);
         }
 
         document.addEventListener('click', handler)
+      },
+
+      showModal() {
+        this.exitModalIsShowed = true;
+      },
+
+      hideModal() {
+        this.exitModalIsShowed = false;
       }
     }
   }
@@ -123,6 +152,7 @@
           aspect-ratio: 1;
           padding: 8%;
           transition: 400ms ease all;
+          color: black !important;
 
           &.open-chats:hover {
             animation: points-animation;
