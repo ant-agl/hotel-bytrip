@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkhotel_bytrip"]=self["webpackChunkhotel_bytrip"]||[]).push([[607],{607:function(e,r,t){t.r(r),t.d(r,{default:function(){return o}});var n=t(3396);const u={class:"router-view"};function c(e,r){return(0,n.wg)(),(0,n.iD)("main",u,"qwe")}var i=t(89);const s={},a=(0,i.Z)(s,[["render",c]]);var o=a}}]);
+//# sourceMappingURL=607.44079d25.js.map
