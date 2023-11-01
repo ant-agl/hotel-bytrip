@@ -1,3 +1,35 @@
+<template>
+  <form id="personality-form">
+    <h2>Личные данные</h2>
+
+    <InputField
+      v-for="field in FIELDS"
+      :key="field.fieldId"
+      :fieldId="field.fieldId"
+      :user="user"
+      :onChange="onChange"
+      :title="field.label"
+      :placeholder="field.label"
+      type="name"
+    />
+
+    <button
+      class="save"
+      :class="{ disabled: !hasChanges }"
+      @click.prevent="submit()"
+    >
+      Сохранить личные данные
+    </button>
+
+    <AppModalVue
+      :showed="successModalIsShowed"
+      :title="`Данные сохранены`"
+      @close="hideModal()"
+    >
+    </AppModalVue>
+  </form>
+</template>
+
 <script>
 import { ref } from "vue";
 import AppModalVue from "@/components/app/AppModal.vue";
@@ -63,35 +95,3 @@ function submit() {
   data.successModalIsShowed.value = true;
 }
 </script>
-
-<template>
-  <form id="personality-form">
-    <h2>Личные данные</h2>
-
-    <InputField
-      v-for="field in FIELDS"
-      :key="field.fieldId"
-      :fieldId="field.fieldId"
-      :user="user"
-      :onChange="onChange"
-      :title="field.label"
-      :placeholder="field.label"
-      type="name"
-    />
-
-    <button
-      class="save"
-      :class="{ disabled: !hasChanges }"
-      @click.prevent="submit()"
-    >
-      Сохранить личные данные
-    </button>
-
-    <AppModalVue
-      :showed="successModalIsShowed"
-      :title="`Данные сохранены`"
-      @close="hideModal()"
-    >
-    </AppModalVue>
-  </form>
-</template>

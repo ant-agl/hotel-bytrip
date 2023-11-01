@@ -7,7 +7,7 @@
       :key="item.title"
     >
       <div class="icon">
-        <img :src="getIconSrc(item.icon)" alt="" />
+        <img :src="'/img/' + item.icon" alt="" />
       </div>
       <div class="title">{{ item.title }}</div>
     </router-link>
@@ -32,25 +32,17 @@ const ITEMS = [
   },
   {
     title: "Редактирование номеров",
-    url: "/editing",
+    url: "/edit-room",
     icon: "icon_editing.svg",
   },
   { title: "Сообщения", url: "/chats", icon: "icon_chats.svg" },
 ];
-
-const getIconSrc = function (filename) {
-  return `/img/${filename}`;
-};
 
 export default {
   data() {
     return {
       ITEMS,
     };
-  },
-
-  methods: {
-    getIconSrc,
   },
 };
 </script>
@@ -66,7 +58,7 @@ export default {
 
   .nav-item {
     display: flex;
-    gap: 0.5rem;
+    gap: 14px;
     padding: 1rem;
     align-items: center;
     width: 100%;
@@ -95,7 +87,7 @@ export default {
       color: vars.$highlight--color;
     }
 
-    &.router-link-active {
+    &.active {
       border-radius: 20px;
       position: relative;
       cursor: default;

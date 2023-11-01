@@ -18,4 +18,33 @@ $main_contrast--color: black;
 
 $negative_dark--color: #d04343;
 $negative--color: #ff5f5f;
-$negative_contrast--color: white
+$negative_contrast--color: white;
+
+:root {
+  --light-orange: #447BBA;
+  --light-blue: #F0FBFF;
+  --dark-orange: #008bfa;
+  --orange: #008bfa;
+  --white: #f5f5f5;
+  --yellow-text: #008bfa;
+  --black: #447bba;
+  --beige-color: #ffffff;
+  --red: #ff0000;
+  --dark-red: #d00000;
+  --green: #31BB00;
+  --gray: #edeef0;
+  --light-green: #60E886;
+  --dark-green: #53B76F;
+  --light-gray: #B5B2B2;
+  --dark-gray: #828282;
+  --color-primary: #005382;
+  --color-primary2: #007895;
+  --color-secondary: #25aab9;
+  --color-secondary2: #0e5e6f;
+  --color-bg: #FFFFFF;
+  --color-tile: #eaeaea;
+  --color-light-red: #FFD6D6;
+  --color-red: #FF5F5F;
+  --color-green: #2e9500;
+  --color-text: #002a31;
+}

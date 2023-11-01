@@ -6,7 +6,9 @@
       <AppSideBar />
       <router-view v-slot="{ Component, route }">
         <Transition appear>
-          <component :is="Component" :key="route.name" />
+          <div class="router-view" :key="route.name">
+            <component :is="Component" />
+          </div>
         </Transition>
       </router-view>
     </div>
@@ -16,7 +18,6 @@
 <script setup>
 import AppHeader from "@/components/app/AppHeader.vue";
 import AppSideBar from "@/components/app/AppSideBar.vue";
-import "@/assets/styles/global.scss";
 </script>
 
 <style lang="scss" scoped>

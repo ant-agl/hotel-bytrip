@@ -1,5 +1,5 @@
 <template>
-  <main id="personal-view" class="router-view">
+  <main id="personal-view">
     <PersonalityForm />
     <SecurityForm />
   </main>
