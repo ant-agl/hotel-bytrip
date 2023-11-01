@@ -1,71 +1,3 @@
-<script lang="ts">
-  import {ref} from "vue";
-  import AppModalVue from "@/components/app/AppModal.vue";
-  import InputField from "./InputField.vue";
-
-  const FIELDS = [
-    {fieldId: "last_name", label: "Фамилия"},
-    {fieldId: "first_name", label: "Имя"},
-    {fieldId: "middle_name", label: "Отчество"},
-  ]
-
-  const data = { 
-    FIELDS,
-    successModalIsShowed: ref(false),
-    hasChanges: ref(false),
-    user: {last_name: "Гетьман", first_name: "Михаил", middle_name: "Евгеньевич"},
-    unchangedUser: {last_name: "Гетьман", first_name: "Михаил", middle_name: "Евгеньевич"} //only for test
-  }
-
-
-  export default {
-    data() {
-        return data;
-    },
-    methods: {
-      submit,
-        
-      hideModal() {
-        this.successModalIsShowed = false
-      },
-
-
-      onChange: function(event:any) {
-        let {value, name: fieldId} = event.target; 
-        this.user[fieldId] = value;
-        this.$forceUpdate()
-      }
-
-    },
-    updated() {
-        data.hasChanges.value = checkChanges();
-    },
-    components: { AppModalVue, InputField }
-}
-
-
-  function checkChanges() {
-    let hasChanges = 0;
-
-    Object.keys(data.unchangedUser).map( fieldId => {
-      hasChanges += Number(data.user[fieldId] != data.unchangedUser[fieldId])
-    })
-
-    return !!hasChanges;
-  }
-
-
-  
-  function submit() {
-    if(!data.hasChanges.value) return;
-    data.successModalIsShowed.value = true;
-  }
-
-
-</script>
-
-
-
 <template>
   <form id="personality-form">
     <h2>Личные данные</h2>
@@ -96,4 +28,66 @@
 
   </form>
 </template>
+
+
+
+<script lang="ts">
+  import AppModalVue from "@/components/app/AppModal.vue";
+  import InputField from "./InputField.vue";
+
+  const FIELDS = [
+    {fieldId: "last_name", label: "Фамилия"},
+    {fieldId: "first_name", label: "Имя"},
+    {fieldId: "middle_name", label: "Отчество"},
+  ]
+
+  export default {
+    data() {
+      return { 
+        FIELDS,
+        successModalIsShowed: false,
+        hasChanges: false,
+        user: {last_name: "Гетьман", first_name: "Михаил", middle_name: "Евгеньевич"},
+        unchangedUser: {last_name: "Гетьман", first_name: "Михаил", middle_name: "Евгеньевич"} //only for test
+      }
+    },
+
+    methods: {
+      submit() {
+        if(!this.hasChanges) return;
+        this.successModalIsShowed = true;
+      },
+        
+      hideModal() {
+        this.successModalIsShowed = false
+      },
+
+
+      onChange: function(event:any) {
+        let {value, name: fieldId} = event.target; 
+        this.user[fieldId] = value;
+        this.$forceUpdate()
+      }
+    },
+
+    computed: {
+      hasChanges() {
+        let hasChanges = false;
+
+        Object.keys(this.unchangedUser).forEach( fieldId => {
+          if(this.user[fieldId] != this.unchangedUser[fieldId])
+            hasChanges = true
+        })
+
+        this.$data.hasChanges = hasChanges;
+        return hasChanges
+      }
+    },
+
+    components: { AppModalVue, InputField }
+}
+
+
+
+</script>
 

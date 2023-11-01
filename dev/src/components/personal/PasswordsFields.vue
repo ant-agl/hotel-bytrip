@@ -39,26 +39,22 @@
 <script lang="ts">
   
   import InputField from './InputField.vue';
-  import {ref} from 'vue';
-
-
-  const data = {
-    inputsAreShowed: ref(false)
-  }
 
   export default {
 
-    data() {return data},
+    data: () => ({
+      inputsAreShowed: false
+    }),
 
     props: ['user', 'onChange'],
 
     methods: {
       
       switchInputsShow() {
-        let prev = data.inputsAreShowed.value;
-        data.inputsAreShowed.value = !prev;
+        let prev = this.inputsAreShowed;
+        this.inputsAreShowed = !prev;
 
-        if(data.inputsAreShowed.value == false) {
+        if(this.inputsAreShowed == false) {
           this.$props.user.password = '';
           this.$props.user.repeatedPassword = '';
         }
