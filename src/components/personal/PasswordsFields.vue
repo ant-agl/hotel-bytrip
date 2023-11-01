@@ -41,10 +41,10 @@ export default {
 
   methods: {
     switchInputsShow() {
-      let prev = this.inputsAreShowed.value;
-      this.inputsAreShowed.value = !prev;
+      let prev = this.inputsAreShowed;
+      this.inputsAreShowed = !prev;
 
-      if (this.inputsAreShowed.value == false) {
+      if (this.inputsAreShowed == false) {
         this.$props.user.password = "";
         this.$props.user.repeatedPassword = "";
       }

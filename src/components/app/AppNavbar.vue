@@ -79,6 +79,7 @@ export default {
 
     .icon {
       height: 100%;
+      width: 17px;
       aspect-ratio: 1;
       display: flex;
       align-items: center;
