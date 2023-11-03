@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <AppBack v-if="isBack" :link="linkBack" />
+    <AppBack v-if="isBack" :link="backLink" />
     <h2>{{ title }}</h2>
     <slot></slot>
   </div>
@@ -14,7 +14,7 @@ export default {
   props: {
     title: String,
     isBack: Boolean,
-    linkBack: String,
+    backLink: String,
   },
 };
 </script>

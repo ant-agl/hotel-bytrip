@@ -11,7 +11,7 @@
           </header>
 
           <main class="body">
-            <slot name="body"></slot>
+            <slot></slot>
           </main>
         </div>
       </Transition>
@@ -96,7 +96,7 @@ export default {
       justify-content: space-between;
 
       .title {
-        font-weight: bold;
+        font-weight: 600;
       }
 
       .close {
