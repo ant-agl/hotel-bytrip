@@ -1,57 +1,58 @@
+import api from "@/axios/api";
+
 export default {
   state: {
-    rooms: [
-      {
-        id: 1,
-        title: "Room 1",
-        desc: "Text Text TextTextTextTextText Text",
-        images: [
-          "/img/rooms/1.jpg",
-          "/img/rooms/2.jpg",
-          "/img/rooms/3.jpg",
-          "/img/rooms/4.jpg",
-        ],
-        list: [
-          {
-            name: "Вместимость",
-            text: "1 человека",
-          },
-          {
-            name: "Питание",
-            text: "Включен обед и ужин",
-          },
-          {
-            name: "Вид кровати",
-            text: "односпальная, двухспальная",
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: "Room 2",
-        desc: "Text Text TextTextTextTextText Text",
-        images: [
-          "/img/rooms/1.jpg",
-          "/img/rooms/2.jpg",
-          "/img/rooms/3.jpg",
-          "/img/rooms/4.jpg",
-        ],
-        list: [
-          {
-            name: "Вместимость",
-            text: "1 человека",
-          },
-          {
-            name: "Вид кровати",
-            text: "односпальная",
-          },
-        ],
-      },
-    ],
+    rooms: [],
   },
   getters: {
     rooms: (s) => s.rooms,
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    setRooms(s, rooms) {
+      s.rooms = rooms;
+    },
+  },
+  actions: {
+    async getRooms({ commit }) {
+      return api
+        .get("/get_rooms_info.php")
+        .then((response) => {
+          response.data.forEach((room) => {
+            let beds = [];
+            room.beds.forEach((bed) => {
+              switch (bed) {
+                case "single":
+                  beds.push("односпальная");
+                  break;
+                case "double":
+                  beds.push("двухспальная");
+                  break;
+              }
+            });
+
+            let list = [
+              {
+                name: "Вместимость",
+                text: room.person + " человека",
+              },
+              {
+                name: "Питание",
+                text: room.feed,
+              },
+              {
+                name: "Вид кровати",
+                text: beds.join(", "),
+              },
+            ];
+            room.list = list;
+          });
+
+          console.log("getRooms", response.data);
+          commit("setRooms", response.data);
+        })
+        .catch((error) => {
+          console.log("getRooms error", error);
+        });
+    },
+  },
 };

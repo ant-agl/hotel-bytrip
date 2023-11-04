@@ -6,30 +6,35 @@
   >
     <AppTabs :tabs="tabs" v-model="activeTab" class="tabs" />
 
-    <transition>
-      <ServicesData v-if="activeTab == 'services'" />
-      <div v-else-if="activeTab == 'tariffs'">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro dolorem
-        nam, sit quibusdam numquam exercitationem ullam fugiat. Provident
-        explicabo quasi reiciendis doloribus quam quisquam ipsa libero corrupti,
-        illum, facilis aspernatur!
-      </div>
-      <div v-else-if="activeTab == 'images'">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat quasi
-        ex libero quam ducimus. Odio natus laudantium molestiae, dolorem dolorum
-        doloremque repudiandae est maiores excepturi, sequi omnis magnam
-        officia, quis sed qui. Quos inventore illo quae dolorem nisi dignissimos
-        accusantium!
-      </div>
-      <div v-else-if="activeTab == 'info'">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde amet
-        perferendis nostrum officiis iusto omnis ab ducimus! Ad, exercitationem
-        rerum?
+    <transition mode="out-in" name="show">
+      <div :key="activeTab">
+        <div v-if="activeTab == 'info'">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde amet
+          perferendis nostrum officiis iusto omnis ab ducimus! Ad,
+          exercitationem rerum?
+        </div>
+        <div v-else-if="activeTab == 'images'">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+          quasi ex libero quam ducimus. Odio natus laudantium molestiae, dolorem
+          dolorum doloremque repudiandae est maiores excepturi, sequi omnis
+          magnam officia, quis sed qui. Quos inventore illo quae dolorem nisi
+          dignissimos accusantium!
+        </div>
+        <ServicesData
+          v-else-if="activeTab == 'services'"
+          @addService="addService"
+        />
+        <div v-else-if="activeTab == 'tariffs'">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro dolorem
+          nam, sit quibusdam numquam exercitationem ullam fugiat. Provident
+          explicabo quasi reiciendis doloribus quam quisquam ipsa libero
+          corrupti, illum, facilis aspernatur!
+        </div>
       </div>
     </transition>
 
     <div class="footer">
-      <AppBtn>Сохранить</AppBtn>
+      <AppBtn>Создать</AppBtn>
     </div>
   </AppContent>
 </template>
@@ -45,6 +50,14 @@ export default {
   data: () => ({
     tabs: [
       {
+        id: "info",
+        name: "Информация",
+      },
+      {
+        id: "images",
+        name: "Изображения",
+      },
+      {
         id: "services",
         name: "Услуги и удобства",
       },
@@ -52,17 +65,17 @@ export default {
         id: "tariffs",
         name: "Тарифы",
       },
-      {
-        id: "images",
-        name: "Изображения",
-      },
-      {
-        id: "info",
-        name: "Информация",
-      },
     ],
-    activeTab: "services",
+    activeTab: "info",
   }),
+  methods: {
+    addService(data) {
+      console.log(2, data);
+    },
+    sendForm() {
+      //add_room.php
+    },
+  },
 };
 </script>
 
@@ -75,13 +88,6 @@ export default {
   gap: 15px;
   align-items: center;
   justify-content: flex-end;
-}
-.v-enter-active {
-  transition: opacity 0.4s ease;
-}
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-  position: absolute;
+  margin-top: 20px;
 }
 </style>

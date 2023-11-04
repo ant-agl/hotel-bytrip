@@ -14,35 +14,47 @@
     </div>
   </div>
 
-  <AppModal
-    :showed="isModalAdd"
-    title="Добавить услугу"
+  <ModalAddService
+    :isActive="isModalAdd"
+    @addService="$emit('addService', $event)"
     @close="isModalAdd = false"
-  >
-    <AppBtn>Добавить</AppBtn>
-  </AppModal>
+  />
   <AppModal
     :showed="isModalCreate"
     title="Создать услугу"
     @close="isModalCreate = false"
   >
-    <AppBtn>Создать</AppBtn>
+    <template v-slot:footer>
+      <AppBtn>Создать</AppBtn>
+    </template>
   </AppModal>
 </template>
 
 <script>
 import AppModal from "@/components/app/AppModal";
+import ModalAddService from "@/components/room/ModalAddService";
 import AppBtn from "@/components/app/AppBtn";
+
 import { mapGetters } from "vuex";
 
 export default {
-  components: { AppModal, AppBtn },
+  components: { AppModal, AppBtn, ModalAddService },
   data: () => ({
     isModalAdd: false,
     isModalCreate: false,
   }),
   computed: {
     ...mapGetters(["services"]),
+    servicesListSelect() {
+      let res = [];
+      this.servicesList.forEach((item) => {
+        res.push({
+          id: item.id,
+          label: `${item.category} - ${item.name}`,
+        });
+      });
+      return res;
+    },
   },
 };
 </script>

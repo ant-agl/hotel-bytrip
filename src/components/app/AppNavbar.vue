@@ -3,6 +3,7 @@
     <router-link
       :to="item.url"
       class="nav-item"
+      :class="{ active: isActiveUrl(item.url) }"
       v-for="item in ITEMS"
       :key="item.title"
     >
@@ -16,7 +17,11 @@
 
 <script>
 const ITEMS = [
-  { title: "Заезды и отъезды", url: "/", icon: "icon_arrivals_departures.svg" },
+  {
+    title: "Заезды и отъезды",
+    url: "/arrivals-departures",
+    icon: "icon_arrivals_departures.svg",
+  },
   {
     title: "Общая информация",
     url: "/general_info",
@@ -43,6 +48,11 @@ export default {
     return {
       ITEMS,
     };
+  },
+  methods: {
+    isActiveUrl(url) {
+      return this.$route.path.indexOf(url) == 0;
+    },
   },
 };
 </script>

@@ -88,3 +88,33 @@ body {
 img {
   max-width: 100%;
 }
+
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.2s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+.list-leave-active {
+  position: absolute;
+}
+
+.show-enter-active {
+  transition: opacity 0.4s ease;
+}
+.show-enter-from,
+.show-leave-to {
+  opacity: 0;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

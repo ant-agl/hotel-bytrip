@@ -13,6 +13,10 @@
           <main class="body">
             <slot></slot>
           </main>
+
+          <div class="footer">
+            <slot name="footer"></slot>
+          </div>
         </div>
       </Transition>
     </div>
@@ -86,9 +90,11 @@ export default {
     gap: 2em;
     background: white;
     border-radius: 10px;
-    min-width: 60vh;
+    min-width: 500px;
     min-height: 6em;
     padding: 1.2em;
+    max-height: 90vh;
+    overflow-y: auto;
 
     header {
       display: flex;
@@ -115,6 +121,13 @@ export default {
           aspect-ratio: 1;
         }
       }
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
     }
   }
 }

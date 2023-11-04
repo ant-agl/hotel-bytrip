@@ -7,12 +7,15 @@
             <img :src="src" class="item-room__slide" />
           </slide>
         </carousel>
-        <AppCarouselNavigation v-model="currentSlide" />
+        <AppCarouselNavigation
+          v-if="room.images.length > 1"
+          v-model="currentSlide"
+        />
       </div>
 
       <div class="item-room__main">
-        <h4 class="item-room__title">{{ room.title }}</h4>
-        <p class="item-room__desc">{{ room.desc }}</p>
+        <h4 class="item-room__title">{{ room.name }}</h4>
+        <p class="item-room__desc">{{ room.description }}</p>
       </div>
 
       <div class="item-room__list">
