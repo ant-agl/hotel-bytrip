@@ -3,10 +3,8 @@
     v-bind="$props"
     fieldId="password"
     type="password"
-    :placeholder="
-      inputsAreShowed ? 'Новый пароль' : 'Пароль был изменен 14.10.2023 в 19:24'
-    "
     title="Пароль"
+    :placeholder="placeholder"
     :disabled="!inputsAreShowed"
   >
     <template v-slot:button>
@@ -48,6 +46,14 @@ export default {
         this.$props.user.password = "";
         this.$props.user.repeatedPassword = "";
       }
+    },
+  },
+
+  computed: {
+    placeholder() {
+      return this.inputsAreShowed
+        ? "Новый пароль"
+        : "Пароль был изменен 14.10.2023 в 19:24";
     },
   },
 

@@ -1,13 +1,13 @@
 <template>
   <nav id="app-navbar">
     <router-link
-      :to="item.url"
-      class="nav-item"
       v-for="item in ITEMS"
-      :key="item.title"
+      :to="item.url"
+      :key="item.url"
+      class="nav-item"
     >
       <div class="icon">
-        <img :src="'/img/' + item.icon" alt="" />
+        <img :src="getIconSrc(item.icon)" alt="" />
       </div>
       <div class="title">{{ item.title }}</div>
     </router-link>
@@ -16,15 +16,31 @@
 
 <script>
 const ITEMS = [
-  { title: "Заезды и отъезды", url: "/", icon: "icon_arrivals_departures.svg" },
+  {
+    title: "Заезды и отъезды",
+    url: "/",
+    icon: "icon_arrivals_departures.svg",
+  },
   {
     title: "Общая информация",
     url: "/general_info",
     icon: "icon_general_info.svg",
   },
-  { title: "Статистика", url: "/statistics", icon: "icon_statistics.svg" },
-  { title: "Тарифы", url: "/tarifs", icon: "icon_tarifs.svg" },
-  { title: "Бронирование", url: "/booking", icon: "icon_booking.svg" },
+  {
+    title: "Статистика",
+    url: "/statistics",
+    icon: "icon_statistics.svg",
+  },
+  {
+    title: "Тарифы",
+    url: "/tarifs",
+    icon: "icon_tarifs.svg",
+  },
+  {
+    title: "Бронирование",
+    url: "/booking",
+    icon: "icon_booking.svg",
+  },
   {
     title: "Удобства и услуги",
     url: "/facilities",
@@ -32,10 +48,14 @@ const ITEMS = [
   },
   {
     title: "Редактирование номеров",
-    url: "/edit-room",
+    url: "/editing",
     icon: "icon_editing.svg",
   },
-  { title: "Сообщения", url: "/chats", icon: "icon_chats.svg" },
+  {
+    title: "Сообщения",
+    url: "/chats",
+    icon: "icon_chats.svg",
+  },
 ];
 
 export default {
@@ -44,11 +64,17 @@ export default {
       ITEMS,
     };
   },
+
+  methods: {
+    getIconSrc: function (filename) {
+      return `/img/${filename}`;
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
-@use "@/assets/styles/vars.scss";
+@use "../../assets/styles/vars.scss";
 
 #app-navbar {
   display: flex;
@@ -58,11 +84,13 @@ export default {
 
   .nav-item {
     display: flex;
-    gap: 14px;
+    gap: 0.5rem;
     padding: 1rem;
     align-items: center;
+    position: relative;
     width: 100%;
     cursor: pointer;
+    transition: 0.5s ease all;
     text-decoration: none;
 
     &:visited {
@@ -71,7 +99,6 @@ export default {
 
     .icon {
       height: 100%;
-      width: 17px;
       aspect-ratio: 1;
       display: flex;
       align-items: center;
@@ -82,15 +109,13 @@ export default {
         aspect-ratio: 1;
       }
     }
-
     .title {
       color: vars.$highlight--color;
     }
-
-    &.active {
+    &.router-link-exact-active {
       border-radius: 20px;
       position: relative;
-      cursor: default;
+      cursor: pointer;
 
       &::after,
       &:before {
@@ -118,6 +143,26 @@ export default {
         border-left: 1px solid transparent;
         bottom: 0;
         right: 0;
+      }
+    }
+
+    &:not(.router-link-exact-active) {
+      &:after {
+        position: absolute;
+        content: "";
+        bottom: 0;
+        display: block;
+        height: 1px;
+        background: vars.$highlight--color;
+        border-radius: 4px;
+        width: 0;
+        transition: 0.3s;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &:hover:after {
+        width: 100%;
       }
     }
   }

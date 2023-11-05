@@ -11,7 +11,7 @@
           </header>
 
           <main class="body">
-            <slot></slot>
+            <slot name="body"></slot>
           </main>
         </div>
       </Transition>
@@ -62,7 +62,6 @@ export default {
 .modal-container-fade-leave-active {
   transition: opacity 0.2s ease-in;
 }
-
 .modal-container-fade-enter-from,
 .modal-container-fade-leave-to {
   opacity: 0;
@@ -81,13 +80,9 @@ export default {
   justify-content: center;
 
   .modal {
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
     background: white;
     border-radius: 10px;
     min-width: 60vh;
-    min-height: 6em;
     padding: 1.2em;
 
     header {

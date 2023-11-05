@@ -13,9 +13,9 @@
       :onChange="onChange"
     />
 
-    <PasswordsFields :user="user" :onChange="onChange"></PasswordsFields>
+    <PasswordsFields :user="user" :onChange="onChange" />
 
-    <DoubleAuthField :user="user" :onChange="onChange"></DoubleAuthField>
+    <DoubleAuthField :user="user" :onChange="onChange" />
 
     <button
       class="save"
@@ -28,42 +28,34 @@
 
   <AppModal
     :showed="successModalIsShowed"
-    :title="`Данные сохранены`"
+    title="Данные сохранены"
     @close="hideModal()"
   >
   </AppModal>
 </template>
 
 <script>
-import { ref } from "vue";
 import EmailField from "./EmailField.vue";
 import PasswordsFields from "./PasswordsFields.vue";
 import DoubleAuthField from "./DoubleAuthField.vue";
 import InputField from "./InputField.vue";
 import AppModal from "../app/AppModal.vue";
 
-const data = {
-  hasChanges: ref(false),
-  successModalIsShowed: ref(false),
-  user: {
-    email: "domain@example.com",
-    phone: "+7928491237",
-    password: "",
-    repeatedPassword: "",
-    doubleAuth: "none",
-  },
-  unchangedUser: {
-    email: "domain@example.com",
-    phone: "+7928491237",
-    password: "",
-    repeatedPassword: "",
-    doubleAuth: "none",
-  }, //only for test
+const USER = {
+  email: "domain@example.com",
+  phone: "+7928491237",
+  password: "",
+  repeatedPassword: "",
+  doubleAuth: "none",
 };
 
 export default {
   data() {
-    return data;
+    return {
+      successModalIsShowed: false,
+      user: Object.assign({}, USER),
+      unchangedUser: Object.assign({}, USER), //only for test
+    };
   },
 
   components: {
@@ -76,7 +68,7 @@ export default {
 
   methods: {
     submit() {
-      if (!data.hasChanges.value) return;
+      if (!this.hasChanges) return;
       this.successModalIsShowed = true;
     },
 
@@ -91,18 +83,17 @@ export default {
     },
   },
 
-  updated() {
-    data.hasChanges.value = checkChanges();
+  computed: {
+    hasChanges() {
+      let hasChanges = false;
+
+      Object.keys(this.unchangedUser).forEach((fieldId) => {
+        if (this.user[fieldId] != this.unchangedUser[fieldId])
+          hasChanges = true;
+      });
+
+      return hasChanges;
+    },
   },
 };
-
-function checkChanges() {
-  let hasChanges = 0;
-
-  Object.keys(data.unchangedUser).map((fieldId) => {
-    hasChanges += Number(data.user[fieldId] != data.unchangedUser[fieldId]);
-  });
-
-  return !!hasChanges;
-}
 </script>

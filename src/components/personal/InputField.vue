@@ -1,7 +1,6 @@
 <template>
-  <div :class="`field ${$props.fieldId}-field`">
+  <div :class="className">
     <label>{{ $props.title }}</label>
-
     <div class="container">
       <div class="input-interactive">
         <input
@@ -9,20 +8,15 @@
           :name="$props.fieldId"
           :placeholder="$props.placeholder"
           :value="$props.user[$props.fieldId]"
-          @input="$props.onChange($event)"
           :disabled="$props.disabled"
+          @input="$props.onChange($event)"
         />
-
         <button
           v-if="$props.type == 'password' && $props.disabled == false"
           class="switch-watching"
           @click.prevent="switchPasswordInputType()"
         >
-          <img
-            :src="`/img/icon_${
-              passwordIsShowed ? 'hide_password' : 'show_password'
-            }.svg`"
-          />
+          <img :src="passwordIcon" />
         </button>
       </div>
 
@@ -44,11 +38,13 @@ export default {
   ],
 
   data() {
-    console.log(this.$props);
-
     return {
       inputType: this.$props.type,
       passwordIsShowed: false,
+      className: `field ${this.$props.fieldId}-field`,
+      passwordIcon: `/img/icon_${
+        this.passwordIsShowed ? "hide_password" : "show_password"
+      }.svg`,
     };
   },
 
@@ -56,8 +52,11 @@ export default {
     switchPasswordInputType() {
       this.passwordIsShowed = !this.passwordIsShowed;
 
-      if (this.passwordIsShowed) this.inputType = "text";
-      else this.inputType = "password";
+      if (this.passwordIsShowed) {
+        this.inputType = "text";
+      } else {
+        this.inputType = "password";
+      }
     },
   },
 };

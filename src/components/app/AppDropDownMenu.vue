@@ -2,43 +2,17 @@
   <Transition name="drop-down-menu-fade">
     <div id="app-drop-down-menu">
       <router-link to="/personal" class="open-profile">
-        {{ user.name }}
+        {{ $props.user.name }}
       </router-link>
 
-      <a class="exit" @click="showModal()">Выйти</a>
-
-      <AppModal
-        :showed="exitModalIsShowed"
-        v-bind:title="`Выйти из профиля?`"
-        @close="hideModal()"
-        class-name="exit-modal"
-      >
-        <div class="message">
-          Вы действительно хотите выйти из вашего профиля?
-        </div>
-
-        <div class="buttons">
-          <button class="no" @click="hideModal()">Отмена</button>
-          <button class="yes">Выйти</button>
-        </div>
-      </AppModal>
+      <a class="exit" @click="$props.showModal">Выйти</a>
     </div>
   </Transition>
 </template>
 
-<script setup>
-import AppModal from "./AppModal.vue";
-</script>
-
 <script>
 export default {
-  props: ["user"],
-
-  data() {
-    return {
-      exitModalIsShowed: false,
-    };
-  },
+  props: ["user", "showModal"],
 
   mounted() {
     this.fitPositions();
@@ -50,14 +24,6 @@ export default {
   },
 
   methods: {
-    showModal() {
-      this.exitModalIsShowed = true;
-    },
-
-    hideModal() {
-      this.exitModalIsShowed = false;
-    },
-
     fitPositions() {
       let headerContainer = document.querySelector("#app-header .container");
       let headerContainerCors = headerContainer?.getBoundingClientRect();
@@ -75,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use "../../assets/styles/vars.scss";
+@use "@/assets/styles/vars.scss";
 
 #app-drop-down-menu {
   position: absolute;
@@ -114,38 +80,6 @@ export default {
       svg {
         width: 30px;
         aspect-ratio: 1;
-      }
-    }
-  }
-}
-
-.exit-modal {
-  .buttons {
-    display: flex;
-    gap: 6%;
-    margin-top: 2em;
-
-    button {
-      padding: 0.8em;
-      font-size: 0.9em;
-      border-radius: 15px;
-      transition: 200ms ease all;
-      width: 47%;
-      cursor: pointer;
-
-      &.no {
-        background: rgb(215, 215, 215);
-        &:hover {
-          background: rgb(230, 230, 230);
-        }
-      }
-
-      &.yes {
-        background: vars.$negative_dark--color;
-        color: vars.$negative_contrast--color;
-        &:hover {
-          background: vars.$negative--color;
-        }
       }
     }
   }

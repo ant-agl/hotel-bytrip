@@ -1,7 +1,6 @@
 <template>
   <form id="personality-form">
     <h2>Личные данные</h2>
-
     <InputField
       v-for="field in FIELDS"
       :key="field.fieldId"
@@ -31,7 +30,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import AppModalVue from "@/components/app/AppModal.vue";
 import InputField from "./InputField.vue";
 
@@ -41,57 +39,50 @@ const FIELDS = [
   { fieldId: "middle_name", label: "Отчество" },
 ];
 
-const data = {
-  FIELDS,
-  successModalIsShowed: ref(false),
-  hasChanges: ref(false),
-  user: {
-    last_name: "Гетьман",
-    first_name: "Михаил",
-    middle_name: "Евгеньевич",
-  },
-  unchangedUser: {
-    last_name: "Гетьман",
-    first_name: "Михаил",
-    middle_name: "Евгеньевич",
-  }, //only for test
+const USER = {
+  last_name: "Гетьман",
+  first_name: "Михаил",
+  middle_name: "Евгеньевич",
 };
 
 export default {
   data() {
-    return data;
+    return {
+      FIELDS,
+      successModalIsShowed: false,
+      user: Object.assign({}, USER),
+      unchangedUser: Object.assign({}, USER), //only for test
+    };
   },
-  methods: {
-    submit,
 
+  methods: {
+    submit() {
+      if (!this.hasChanges) return;
+      this.successModalIsShowed = true;
+    },
     hideModal() {
       this.successModalIsShowed = false;
     },
-
     onChange: function (event) {
       let { value, name: fieldId } = event.target;
       this.user[fieldId] = value;
       this.$forceUpdate();
     },
   },
-  updated() {
-    data.hasChanges.value = checkChanges();
+
+  computed: {
+    hasChanges() {
+      let hasChanges = false;
+
+      Object.keys(this.unchangedUser).forEach((fieldId) => {
+        if (this.user[fieldId] != this.unchangedUser[fieldId])
+          hasChanges = true;
+      });
+
+      return hasChanges;
+    },
   },
+
   components: { AppModalVue, InputField },
 };
-
-function checkChanges() {
-  let hasChanges = 0;
-
-  Object.keys(data.unchangedUser).map((fieldId) => {
-    hasChanges += Number(data.user[fieldId] != data.unchangedUser[fieldId]);
-  });
-
-  return !!hasChanges;
-}
-
-function submit() {
-  if (!data.hasChanges.value) return;
-  data.successModalIsShowed.value = true;
-}
 </script>
