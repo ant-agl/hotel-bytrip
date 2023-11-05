@@ -42,10 +42,15 @@ export default {
       inputType: this.$props.type,
       passwordIsShowed: false,
       className: `field ${this.$props.fieldId}-field`,
-      passwordIcon: `/img/icon_${
-        this.passwordIsShowed ? "hide_password" : "show_password"
-      }.svg`,
     };
+  },
+
+  computed: {
+    passwordIcon() {
+      return `/img/icon_${
+        this.passwordIsShowed ? "hide_password" : "show_password"
+      }.svg`;
+    },
   },
 
   methods: {
