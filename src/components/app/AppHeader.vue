@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use "../../assets/styles/vars.scss";
+@use "@/assets/styles/vars.scss";
 
 .drop-down-menu-fade-enter-active,
 .drop-down-menu-fade-leave-active {
@@ -154,9 +154,6 @@ export default {
 }
 
 .exit-modal {
-  main {
-    margin-top: 1em;
-  }
   .buttons {
     display: flex;
     gap: 6%;
