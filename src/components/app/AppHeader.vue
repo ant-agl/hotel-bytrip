@@ -96,12 +96,14 @@ export default {
 
 .drop-down-menu-fade-enter-active,
 .drop-down-menu-fade-leave-active {
-  transition: opacity 100ms ease;
+  transition: 0.2s ease;
+  transform-origin: top right;
 }
 
 .drop-down-menu-fade-enter-from,
 .drop-down-menu-fade-leave-to {
   opacity: 0;
+  transform: scale(0);
 }
 
 #app-header {
