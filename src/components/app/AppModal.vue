@@ -11,7 +11,7 @@
           </header>
 
           <main class="body">
-            <slot></slot>
+            <slot name="body"></slot>
           </main>
 
           <div class="footer">
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { Transition } from "vue";
+
 export default {
   props: ["size", "className", "title", "showed"],
   methods: {
@@ -35,6 +37,8 @@ export default {
       document.body.style.overflowY = this.$props.showed ? "hidden" : "auto";
     },
   },
+
+  components: { Transition },
 
   mounted() {
     this.switchOverflowY();
@@ -66,7 +70,6 @@ export default {
 .modal-container-fade-leave-active {
   transition: opacity 0.2s ease-in;
 }
-
 .modal-container-fade-enter-from,
 .modal-container-fade-leave-to {
   opacity: 0;
@@ -85,13 +88,9 @@ export default {
   justify-content: center;
 
   .modal {
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
     background: white;
     border-radius: 10px;
-    min-width: 500px;
-    min-height: 6em;
+    min-width: 60vh;
     padding: 1.2em;
     max-height: 90vh;
     overflow-y: auto;

@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@use "@/assets/styles/vars.scss";
+@use "../../assets/styles/vars.scss";
 
 #side-bar {
   display: flex;
