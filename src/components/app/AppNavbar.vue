@@ -49,7 +49,7 @@ const ITEMS = [
   },
   {
     title: "Редактирование номеров",
-    url: "/editing",
+    url: "/edit-room",
     icon: "icon_editing.svg",
   },
   {

@@ -33,16 +33,14 @@
       @close="hideModal()"
       class-name="exit-modal"
     >
-      <template v-slot:body>
-        <div class="message">
-          Вы действительно хотите выйти из вашего профиля?
-        </div>
+      <div class="message">
+        Вы действительно хотите выйти из вашего профиля?
+      </div>
 
-        <div class="buttons">
-          <button class="no" @click="hideModal()">Отмена</button>
-          <button class="yes">Выйти</button>
-        </div>
-      </template>
+      <div class="buttons">
+        <button class="no" @click="hideModal()">Отмена</button>
+        <button class="yes">Выйти</button>
+      </div>
     </AppModal>
   </header>
 </template>

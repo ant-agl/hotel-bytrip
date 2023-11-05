@@ -9,7 +9,10 @@
       </button>
     </div>
     <div class="services__body">
-      <div v-if="services.length > 0"></div>
+      <div v-if="services.free.length > 0">
+        <AppAccordion />
+        <div v-for="service in services.free" :key="service">{{ service }}</div>
+      </div>
       <p v-else class="services__zero">Добавленных услуг пока нет</p>
     </div>
   </div>
@@ -32,30 +35,20 @@
 
 <script>
 import AppModal from "@/components/app/AppModal";
+import AppAccordion from "@/components/app/AppAccordion";
 import ModalAddService from "@/components/room/ModalAddService";
 import AppBtn from "@/components/app/AppBtn";
 
-import { mapGetters } from "vuex";
-
 export default {
-  components: { AppModal, AppBtn, ModalAddService },
+  components: { AppModal, AppBtn, ModalAddService, AppAccordion },
+  emits: ["addService"],
+  props: {
+    services: Object,
+  },
   data: () => ({
     isModalAdd: false,
     isModalCreate: false,
   }),
-  computed: {
-    ...mapGetters(["services"]),
-    servicesListSelect() {
-      let res = [];
-      this.servicesList.forEach((item) => {
-        res.push({
-          id: item.id,
-          label: `${item.category} - ${item.name}`,
-        });
-      });
-      return res;
-    },
-  },
 };
 </script>
 

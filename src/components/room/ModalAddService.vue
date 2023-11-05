@@ -47,6 +47,7 @@ import { mapGetters } from "vuex";
 
 export default {
   components: { AppModal, AppSelect, AppInput, AppBtn, AppCheckbox },
+  emits: ["addService", "close"],
   props: {
     isActive: Boolean,
   },
@@ -93,8 +94,8 @@ export default {
         price: this.price,
         type: this.typeService,
       };
-      console.log("1", data);
       this.$emit("addService", data);
+      this.close();
     },
     close() {
       this.serviceValue = "";

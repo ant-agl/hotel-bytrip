@@ -11,7 +11,7 @@
           </header>
 
           <main class="body">
-            <slot name="body"></slot>
+            <slot></slot>
           </main>
 
           <div class="footer">

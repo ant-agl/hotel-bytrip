@@ -22,6 +22,7 @@
         </div>
         <ServicesData
           v-else-if="activeTab == 'services'"
+          :services="curServices"
           @addService="addService"
         />
         <div v-else-if="activeTab == 'tariffs'">
@@ -67,10 +68,22 @@ export default {
       },
     ],
     activeTab: "info",
+    curServices: {
+      free: [],
+      paid: [],
+    },
   }),
   methods: {
     addService(data) {
       console.log(2, data);
+      if (data.isPaid) {
+        this.curServices.paid.push({
+          id: data.service,
+          price: data.price,
+        });
+      } else {
+        this.curServices.free.push(data.service);
+      }
     },
     sendForm() {
       //add_room.php
