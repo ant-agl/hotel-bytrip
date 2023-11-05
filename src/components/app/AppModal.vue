@@ -95,7 +95,7 @@ export default {
       justify-content: space-between;
 
       .title {
-        font-weight: bold;
+        font-weight: 600;
       }
 
       .close {
