@@ -10,11 +10,11 @@
             </button>
           </header>
 
-          <main class="body">
+          <main v-if="$slots.default" class="body">
             <slot></slot>
           </main>
 
-          <div class="footer">
+          <div v-if="$slots.footer" class="footer">
             <slot name="footer"></slot>
           </div>
         </div>
@@ -24,8 +24,6 @@
 </template>
 
 <script>
-import { Transition } from "vue";
-
 export default {
   props: ["size", "className", "title", "showed"],
   methods: {
@@ -37,9 +35,6 @@ export default {
       document.body.style.overflowY = this.$props.showed ? "hidden" : "auto";
     },
   },
-
-  components: { Transition },
-
   mounted() {
     this.switchOverflowY();
   },
@@ -90,10 +85,13 @@ export default {
   .modal {
     background: white;
     border-radius: 10px;
-    min-width: 60vh;
+    min-width: 500px;
     padding: 1.2em;
     max-height: 90vh;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
     header {
       display: flex;
