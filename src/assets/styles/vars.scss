@@ -47,4 +47,8 @@ $negative_contrast--color: white;
   --color-red: #FF5F5F;
   --color-green: #2e9500;
   --color-text: #002a31;
+
+  // carousel
+  --vc-clr-primary: var(--color-primary)!important;
+  --vc-pgn-border-radius: 10px!important;
 }

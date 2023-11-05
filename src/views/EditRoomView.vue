@@ -26,7 +26,6 @@ export default {
     ...mapGetters(["rooms"]),
   },
   async mounted() {
-    console.log(this.rooms, this.rooms.length);
     if (this.rooms.length == 0) await this.$store.dispatch("getRooms");
     this.isLoading = false;
   },

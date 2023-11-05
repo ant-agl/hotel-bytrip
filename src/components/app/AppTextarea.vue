@@ -2,7 +2,7 @@
   <div class="input-text__wrap">
     <h6 v-if="title" class="input-text__title">{{ title }}</h6>
     <div class="input-text">
-      <input
+      <textarea
         :type="currentType"
         :value="modelValue"
         class="input-text__input"
@@ -10,7 +10,8 @@
         @input="$emit('update:modelValue', $event.target.value)"
         :disabled="disabled"
         :placeholder="placeholder"
-      />
+        :style="`min-height: ${minHeight}`"
+      ></textarea>
       <button v-if="type == 'password'" class="eye" @click.prevent="changeType">
         <img
           v-if="currentType == 'password'"
@@ -41,6 +42,7 @@ export default {
     errorText: String,
     disabled: Boolean,
     title: String,
+    minHeight: String,
   },
   data: function () {
     return {
@@ -73,6 +75,9 @@ export default {
 
   &__input {
     width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100px;
     border: none;
     border-radius: 12px;
     background-color: var(--gray);

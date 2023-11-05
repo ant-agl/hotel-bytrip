@@ -82,18 +82,27 @@ export default {
     focusInput() {
       setTimeout(() => this.$refs.input.focus());
     },
-    setWidthList() {
+    setCoordsList() {
       const select = this.$refs.select;
       const list = this.$refs.list;
+      const coords = select.getBoundingClientRect();
+
+      list.style.top = coords.top + select.clientHeight + "px";
+      list.style.left = coords.left + "px";
       list.style.width = select.clientWidth + "px";
     },
   },
   mounted() {
     if (this.modelValue != "")
       this.input = this.list.find((i) => i.id == this.modelValue).label;
+
+    window.addEventListener("scroll", this.setCoordsList);
+  },
+  unmounted() {
+    window.removeEventListener("scroll", this.setCoordsList);
   },
   updated() {
-    this.setWidthList();
+    this.setCoordsList();
   },
 };
 </script>
@@ -142,13 +151,8 @@ export default {
     }
   }
   &__list {
-    // position: absolute;
-    // top: 100%;
-    // left: 0;
-    // right: 0;
-    // width: 100%;
     position: fixed;
-    transition: 0.2s;
+    transition: transform 0.2s, opacity 0.2s;
     transform-origin: top center;
     transform: scaleY(0);
     opacity: 1;

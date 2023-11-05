@@ -8,25 +8,23 @@
 
     <transition mode="out-in" name="show">
       <div :key="activeTab">
-        <div v-if="activeTab == 'info'">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde amet
-          perferendis nostrum officiis iusto omnis ab ducimus! Ad,
-          exercitationem rerum?
-        </div>
-        <div v-else-if="activeTab == 'images'">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
-          quasi ex libero quam ducimus. Odio natus laudantium molestiae, dolorem
-          dolorum doloremque repudiandae est maiores excepturi, sequi omnis
-          magnam officia, quis sed qui. Quos inventore illo quae dolorem nisi
-          dignissimos accusantium!
-        </div>
+        <InfoData
+          v-if="activeTab == 'info'"
+          :info="info"
+          @updateInfo="updateInfo"
+        />
+        <ImagesData
+          v-if="activeTab == 'images'"
+          :files="files"
+          @updateFiles="updateFiles"
+        />
         <ServicesData
-          v-else-if="activeTab == 'services'"
+          v-if="activeTab == 'services'"
           :services="curServices"
           @addService="addService"
           @removeService="removeService"
         />
-        <div v-else-if="activeTab == 'tariffs'">
+        <div v-if="activeTab == 'tariffs'">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro dolorem
           nam, sit quibusdam numquam exercitationem ullam fugiat. Provident
           explicabo quasi reiciendis doloribus quam quisquam ipsa libero
@@ -46,9 +44,18 @@ import AppContent from "@/components/app/AppContent";
 import AppTabs from "@/components/app/AppTabs";
 import AppBtn from "@/components/app/AppBtn";
 import ServicesData from "@/components/room/ServicesData";
+import InfoData from "@/components/room/InfoData";
+import ImagesData from "@/components/room/ImagesData";
 
 export default {
-  components: { AppContent, AppTabs, ServicesData, AppBtn },
+  components: {
+    AppContent,
+    AppTabs,
+    ServicesData,
+    InfoData,
+    ImagesData,
+    AppBtn,
+  },
   data: () => ({
     tabs: [
       {
@@ -73,8 +80,27 @@ export default {
       free: [],
       paid: [],
     },
+    info: {
+      countRoom: 1,
+      name: "",
+      group: "",
+      description: "",
+      feed: "",
+      beds: {
+        single: 0,
+        double: 0,
+        buck: 0,
+      },
+    },
+    files: [],
   }),
   methods: {
+    updateInfo(data) {
+      this.info = data;
+    },
+    updateFiles(files) {
+      this.files = files;
+    },
     addService(data) {
       if (data.isPaid) {
         this.curServices.paid.push({
