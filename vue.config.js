@@ -5,5 +5,6 @@ module.exports = defineConfig({
     iconPaths: {
       faviconSVG: "favicon.svg",
     },
+    themeColor: "#fff",
   },
 });

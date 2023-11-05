@@ -24,6 +24,7 @@
           v-else-if="activeTab == 'services'"
           :services="curServices"
           @addService="addService"
+          @removeService="removeService"
         />
         <div v-else-if="activeTab == 'tariffs'">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro dolorem
@@ -35,7 +36,7 @@
     </transition>
 
     <div class="footer">
-      <AppBtn>Создать</AppBtn>
+      <AppBtn @click="sendForm" disabled>Создать</AppBtn>
     </div>
   </AppContent>
 </template>
@@ -75,18 +76,30 @@ export default {
   }),
   methods: {
     addService(data) {
-      console.log(2, data);
       if (data.isPaid) {
         this.curServices.paid.push({
           id: data.service,
           price: data.price,
+          type: data.type,
         });
       } else {
         this.curServices.free.push(data.service);
       }
     },
+    removeService(data) {
+      let index;
+      const type = data.free ? "free" : "paid";
+      if (type == "free") {
+        index = this.curServices[type].findIndex((s) => s == data.id);
+      } else {
+        index = this.curServices[type].findIndex((s) => s.id == data.id);
+      }
+
+      this.curServices[type].splice(index, 1);
+    },
     sendForm() {
       //add_room.php
+      console.log("send");
     },
   },
 };

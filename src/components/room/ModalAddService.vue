@@ -4,7 +4,7 @@
       <AppSelect
         v-model="serviceValue"
         :list="servicesListSelect"
-        isSearch
+        :isSearch="true"
         placeholder="Выберите услугу"
       />
       <label class="label">
@@ -99,6 +99,9 @@ export default {
     },
     close() {
       this.serviceValue = "";
+      this.isPaid = false;
+      this.price = "";
+      this.typeService = "once";
       this.$emit("close");
     },
   },
