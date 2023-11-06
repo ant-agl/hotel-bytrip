@@ -75,7 +75,7 @@ export default {
   left: 0;
   top: 0;
   position: fixed;
-  z-index: 9999;
+  z-index: 100;
   height: 100%;
   background: rgba(0, 0, 0, 0.245);
   display: flex;

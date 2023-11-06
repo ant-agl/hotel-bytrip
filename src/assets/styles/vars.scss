@@ -52,3 +52,15 @@ $negative_contrast--color: white;
   --vc-clr-primary: var(--color-primary)!important;
   --vc-pgn-border-radius: 10px!important;
 }
+
+// datepicker
+.air-datepicker .air-datepicker-body--day-name {
+  color: #00849a;
+}
+.air-datepicker.-bottom-center-.-from-bottom-.-active- {
+  border-radius: 15px;
+}
+.air-datepicker {
+  --adp-border-radius: 10px!important;
+  --adp-cell-border-radius: 10px!important;
+}

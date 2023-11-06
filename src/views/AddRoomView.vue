@@ -24,12 +24,11 @@
           @addService="addService"
           @removeService="removeService"
         />
-        <div v-if="activeTab == 'tariffs'">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro dolorem
-          nam, sit quibusdam numquam exercitationem ullam fugiat. Provident
-          explicabo quasi reiciendis doloribus quam quisquam ipsa libero
-          corrupti, illum, facilis aspernatur!
-        </div>
+        <TariffData
+          v-if="activeTab == 'tariffs'"
+          :tariffs="tariffs"
+          @addTariff="addTariff"
+        />
       </div>
     </transition>
 
@@ -46,6 +45,7 @@ import AppBtn from "@/components/app/AppBtn";
 import ServicesData from "@/components/room/ServicesData";
 import InfoData from "@/components/room/InfoData";
 import ImagesData from "@/components/room/ImagesData";
+import TariffData from "@/components/room/TariffData";
 
 export default {
   components: {
@@ -54,6 +54,7 @@ export default {
     ServicesData,
     InfoData,
     ImagesData,
+    TariffData,
     AppBtn,
   },
   data: () => ({
@@ -93,6 +94,22 @@ export default {
       },
     },
     files: [],
+    tariffs: [
+      {
+        period: "06.11.2023 - 12.11.2023",
+        prices: {
+          1: 1000,
+          2: 900,
+        },
+      },
+      {
+        period: "13.11.2023 - 22.11.2023",
+        prices: {
+          1: 1200,
+          2: 1000,
+        },
+      },
+    ],
   }),
   methods: {
     updateInfo(data) {
@@ -122,6 +139,9 @@ export default {
       }
 
       this.curServices[type].splice(index, 1);
+    },
+    addTariff(data) {
+      this.tariffs.push(data);
     },
     sendForm() {
       //add_room.php

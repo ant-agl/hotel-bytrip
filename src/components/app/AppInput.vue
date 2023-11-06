@@ -9,6 +9,7 @@
         :class="{ error: isError }"
         @input="$emit('update:modelValue', $event.target.value)"
         :disabled="disabled"
+        :readonly="readonly"
         :placeholder="placeholder"
       />
       <button v-if="type == 'password'" class="eye" @click.prevent="changeType">
@@ -40,6 +41,7 @@ export default {
     isError: Boolean,
     errorText: String,
     disabled: Boolean,
+    readonly: Boolean,
     title: String,
   },
   data: function () {
