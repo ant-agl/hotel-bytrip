@@ -23,7 +23,9 @@
         />
       </button>
     </div>
-    <div v-if="isError" class="input-text__error">{{ errorText }}</div>
+    <div v-if="isError && errorText" class="input-text__error">
+      {{ errorText }}
+    </div>
   </div>
 </template>
 

@@ -15,6 +15,7 @@
           v-for="(price, i) in tariff.prices"
           :key="price"
           class="tariffs__price"
+          :class="{ error: price == 0 }"
         >
           {{ i }} чел. - {{ price }} руб.
         </div>
@@ -31,15 +32,18 @@
       tariffIndex = false;
       modalActive = false;
     "
-    @editTariff="$emit('editTariff', $event)"
+    @updateTariff="$emit('updateTariff', $event)"
+    @deleteTariff="$emit('deleteTariff', $event)"
   />
 </template>
 
 <script>
 import ModalTariff from "@/components/room/ModalTariff";
+import { toRaw } from "vue";
 
 export default {
   components: { ModalTariff },
+  emits: ["updateTariff", "deleteTariff"],
   props: {
     tariffs: Array,
     capacity: Number,
@@ -50,7 +54,13 @@ export default {
   }),
   computed: {
     tariff() {
-      return this.tariffs[this.tariffIndex];
+      if (this.tariffIndex === false) return false;
+
+      let tariff = {
+        ...toRaw(this.tariffs[this.tariffIndex]),
+        index: this.tariffIndex,
+      };
+      return tariff;
     },
   },
 };
@@ -76,6 +86,9 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 5px;
+  }
+  &__price.error {
+    color: var(--color-red);
   }
 }
 </style>

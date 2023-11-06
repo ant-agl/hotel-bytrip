@@ -1,14 +1,10 @@
 <template>
   <form class="form">
     <AppInput
-      v-model.number="capacity"
+      :modelValue="capacity"
       placeholder="Вместимость номера"
       title="Вместимость номера"
-      @change="
-        if (capacity == '' || capacity < 1) {
-          capacity = 1;
-        }
-      "
+      @update:modelValue="updateCapacity"
     />
 
     <button type="button" class="link" @click="modalActive = true">
@@ -19,6 +15,8 @@
       v-if="tariffs.length > 0"
       :tariffs="tariffs"
       :capacity="capacity ? capacity : 1"
+      @updateTariff="$emit('updateTariff', $event)"
+      @deleteTariff="$emit('deleteTariff', $event)"
     />
     <p v-else>Тарифов нет</p>
 
@@ -39,15 +37,24 @@ import ModalTariff from "@/components/room/ModalTariff";
 
 export default {
   components: { AppInput, TariffTable, ModalTariff },
-  emits: ["addTariff"],
+  emits: ["addTariff", "updateCapacity", "updateTariff", "deleteTariff"],
   props: {
     tariffs: Object,
+    capacity: [Number, String],
   },
   data() {
     return {
-      capacity: 1,
       modalActive: false,
     };
+  },
+  methods: {
+    updateCapacity(val) {
+      if (val == "") {
+        this.$emit("updateCapacity", "");
+      } else {
+        this.$emit("updateCapacity", val < 1 ? 1 : Number(val));
+      }
+    },
   },
 };
 </script>

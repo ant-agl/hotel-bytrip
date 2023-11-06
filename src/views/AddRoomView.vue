@@ -27,13 +27,17 @@
         <TariffData
           v-if="activeTab == 'tariffs'"
           :tariffs="tariffs"
+          :capacity="capacity"
           @addTariff="addTariff"
+          @updateTariff="updateTariff"
+          @deleteTariff="deleteTariff"
+          @updateCapacity="updateCapacity"
         />
       </div>
     </transition>
 
     <div class="footer">
-      <AppBtn @click="sendForm" disabled>Создать</AppBtn>
+      <AppBtn @click="sendForm" :disabled="isDisabled">Создать</AppBtn>
     </div>
   </AppContent>
 </template>
@@ -47,7 +51,13 @@ import InfoData from "@/components/room/InfoData";
 import ImagesData from "@/components/room/ImagesData";
 import TariffData from "@/components/room/TariffData";
 
+import { useVuelidate } from "@vuelidate/core";
+import { required, minValue } from "@vuelidate/validators";
+
 export default {
+  setup: () => ({
+    v$: useVuelidate(),
+  }),
   components: {
     AppContent,
     AppTabs,
@@ -94,23 +104,39 @@ export default {
       },
     },
     files: [],
-    tariffs: [
-      {
-        period: "06.11.2023 - 12.11.2023",
-        prices: {
-          1: 1000,
-          2: 900,
-        },
-      },
-      {
-        period: "13.11.2023 - 22.11.2023",
-        prices: {
-          1: 1200,
-          2: 1000,
-        },
-      },
-    ],
+    capacity: 1,
+    tariffs: [],
   }),
+  watch: {
+    capacity(capacity) {
+      this.tariffs.forEach((tariff) => {
+        const count = Object.keys(tariff.prices).length;
+
+        // добавление человек в цены
+        for (let i = count + 1; i <= capacity; i++) {
+          tariff.prices[i] = 0;
+        }
+
+        if (capacity == 0) return;
+        // удаление людей из цен
+        for (let i = count; i > capacity; i--) {
+          delete tariff.prices[i];
+        }
+      });
+    },
+  },
+  validations: () => ({
+    info: {
+      countRoom: { required, minValue: minValue(1) },
+      name: { required },
+    },
+  }),
+  computed: {
+    isDisabled() {
+      if (this.v$.$invalid) return true;
+      return false;
+    },
+  },
   methods: {
     updateInfo(data) {
       this.info = data;
@@ -143,8 +169,23 @@ export default {
     addTariff(data) {
       this.tariffs.push(data);
     },
+    updateTariff(data) {
+      const index = data.index;
+      delete data.index;
+      this.tariffs[index] = data;
+      console.log(this.tariffs);
+    },
+    deleteTariff(index) {
+      this.tariffs.splice(index, 1);
+    },
+    updateCapacity(val) {
+      this.capacity = val;
+    },
     sendForm() {
       //add_room.php
+      // const data = {
+      //   number: this.
+      // }
       console.log("send");
     },
   },
