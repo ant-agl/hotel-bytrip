@@ -43,5 +43,21 @@
       border-color: var(--color-red);
     }
   }
+
+  &_outline {
+    background-color: #fff;
+    color: var(--color-primary2);
+    border-color: var(--color-primary2);
+
+    &:hover {
+      color: #fff;
+      background-color: var(--color-primary2);
+      border-color: var(--color-primary2);
+    }
+  }
+
+  &_100 {
+    width: 100%;
+  }
 }
 </style>

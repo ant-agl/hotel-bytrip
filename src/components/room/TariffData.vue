@@ -1,5 +1,5 @@
 <template>
-  <form class="form">
+  <form class="form-flex">
     <AppInput
       :modelValue="capacity"
       placeholder="Вместимость номера"
@@ -27,6 +27,15 @@
       @close="modalActive = false"
       @addTariff="$emit('addTariff', $event)"
     />
+
+    <DiscountChildren
+      :discounts="discounts"
+      :isChild="isChild"
+      @addDiscount="$emit('addDiscount', $event)"
+      @updateDiscount="$emit('updateDiscount', $event)"
+      @deleteDiscount="$emit('deleteDiscount', $event)"
+      @updateIsChild="$emit('updateIsChild', $event)"
+    />
   </form>
 </template>
 
@@ -34,12 +43,24 @@
 import AppInput from "@/components/app/AppInput";
 import TariffTable from "@/components/room/TariffTable";
 import ModalTariff from "@/components/room/ModalTariff";
+import DiscountChildren from "@/components/room/DiscountChildren";
 
 export default {
-  components: { AppInput, TariffTable, ModalTariff },
-  emits: ["addTariff", "updateCapacity", "updateTariff", "deleteTariff"],
+  components: { AppInput, TariffTable, ModalTariff, DiscountChildren },
+  emits: [
+    "addTariff",
+    "updateCapacity",
+    "updateTariff",
+    "deleteTariff",
+    "addDiscount",
+    "updateDiscount",
+    "deleteDiscount",
+    "updateIsChild",
+  ],
   props: {
+    discounts: Array,
     tariffs: Object,
+    isChild: Boolean,
     capacity: [Number, String],
   },
   data() {
@@ -60,13 +81,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  gap: 15px;
-}
 .link {
   font-size: 16px;
   display: inline-block;

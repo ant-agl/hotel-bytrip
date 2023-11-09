@@ -28,10 +28,21 @@
           v-if="activeTab == 'tariffs'"
           :tariffs="tariffs"
           :capacity="capacity"
+          :discounts="discounts"
+          :isChild="isChild"
           @addTariff="addTariff"
           @updateTariff="updateTariff"
           @deleteTariff="deleteTariff"
           @updateCapacity="updateCapacity"
+          @addDiscount="addDiscount"
+          @updateDiscount="updateDiscount"
+          @deleteDiscount="deleteDiscount"
+          @updateIsChild="updateIsChild"
+        />
+        <FeaturesData
+          v-if="activeTab == 'features'"
+          :features="features"
+          @updateFeature="updateFeature"
         />
       </div>
     </transition>
@@ -50,6 +61,7 @@ import ServicesData from "@/components/room/ServicesData";
 import InfoData from "@/components/room/InfoData";
 import ImagesData from "@/components/room/ImagesData";
 import TariffData from "@/components/room/TariffData";
+import FeaturesData from "@/components/room/FeaturesData";
 
 import { useVuelidate } from "@vuelidate/core";
 import { required, minValue } from "@vuelidate/validators";
@@ -61,11 +73,12 @@ export default {
   components: {
     AppContent,
     AppTabs,
+    AppBtn,
     ServicesData,
     InfoData,
     ImagesData,
     TariffData,
-    AppBtn,
+    FeaturesData,
   },
   data: () => ({
     tabs: [
@@ -84,6 +97,10 @@ export default {
       {
         id: "tariffs",
         name: "Тарифы",
+      },
+      {
+        id: "features",
+        name: "Особенности размещения",
       },
     ],
     activeTab: "info",
@@ -106,6 +123,9 @@ export default {
     files: [],
     capacity: 1,
     tariffs: [],
+    discounts: [],
+    features: [],
+    isChild: true,
   }),
   watch: {
     capacity(capacity) {
@@ -124,6 +144,18 @@ export default {
         }
       });
     },
+    discounts: {
+      handler() {
+        let from = 1;
+        this.discounts.forEach((discount, i) => {
+          discount.from = from;
+          if (discount.to < from) discount.to = from;
+          if (discount.to > 17) this.discounts.splice(i);
+          from = discount.to + 1;
+        });
+      },
+      deep: true,
+    },
   },
   validations: () => ({
     info: {
@@ -135,6 +167,53 @@ export default {
     isDisabled() {
       if (this.v$.$invalid) return true;
       return false;
+    },
+    beds() {
+      let beds = [];
+      for (let key in this.info.beds) {
+        let count = this.info.beds[key];
+        for (let i = 0; i < count; i++) {
+          beds.push(key);
+        }
+      }
+      return beds;
+    },
+    rates() {
+      let rates = [];
+      this.tariffs.forEach((tariff) => {
+        const t = tariff.period.split("-").map((p) => p.trim());
+        const start = this.$moment(t[0], "DD.MM.YYYY").unix();
+        const end = this.$moment(t[1], "DD.MM.YYYY").unix();
+
+        let cost = [];
+        for (let person in tariff.prices) {
+          cost.push({
+            person,
+            price: tariff.prices[person],
+          });
+        }
+
+        rates.push({
+          date: {
+            input: start,
+            output: end,
+          },
+          cost,
+        });
+      });
+
+      return JSON.stringify(rates);
+    },
+    recordingPermission() {
+      let recordingPermission = this.curServices.paid.map((s) => {
+        switch (s.type) {
+          case "once":
+            return 1;
+          case "in-day":
+            return 0;
+        }
+      });
+      return JSON.stringify(recordingPermission);
     },
   },
   methods: {
@@ -181,12 +260,56 @@ export default {
     updateCapacity(val) {
       this.capacity = val;
     },
+    addDiscount(val) {
+      this.discounts.push({
+        from: val,
+        to: val,
+        value: 0,
+      });
+    },
+    updateDiscount(data) {
+      if (data.to !== undefined) this.discounts[data.index].to = data.to;
+      if (data.value !== undefined)
+        this.discounts[data.index].value = data.value;
+    },
+    deleteDiscount(index) {
+      this.discounts.splice(index, 1);
+    },
+    updateFeature(data) {
+      if (data.val) {
+        this.features.push(data.id);
+      } else {
+        let index = this.features.findIndex((id) => id == data.id);
+        this.features.splice(index, 1);
+      }
+    },
+    updateIsChild(data) {
+      console.log(data);
+      this.isChild = data ? true : false;
+    },
     sendForm() {
-      //add_room.php
-      // const data = {
-      //   number: this.
-      // }
-      console.log("send");
+      const data = {
+        count: this.info.countRoom,
+        name: this.info.name,
+        description: this.info.description,
+        feed: this.info.feed,
+        beds: JSON.stringify(this.beds),
+        group: this.info.group,
+        person: this.capacity,
+        features: JSON.stringify(this.features),
+        free: JSON.stringify(this.curServices.free),
+        paid: JSON.stringify(this.curServices.paid.map((s) => s.id)),
+        price: JSON.stringify(this.curServices.paid.map((s) => s.price)),
+        recording_permission: this.recordingPermission,
+        image: this.files[0],
+        images: JSON.stringify(this.files),
+        rates: this.rates,
+        discounts: JSON.stringify(this.discounts),
+        isChild: this.isChild ? 1 : 0,
+      };
+      console.log(data);
+
+      this.$store.dispatch("addRoom", data);
     },
   },
 };

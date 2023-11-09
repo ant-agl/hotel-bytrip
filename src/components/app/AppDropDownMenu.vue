@@ -2,17 +2,17 @@
   <Transition name="drop-down-menu-fade">
     <div id="app-drop-down-menu">
       <router-link to="/personal" class="open-profile">
-        {{ $props.user.name }}
+        {{ name }}
       </router-link>
 
-      <a class="exit" @click="$props.showModal">Выйти</a>
+      <a class="exit" @click="showModal">Выйти</a>
     </div>
   </Transition>
 </template>
 
 <script>
 export default {
-  props: ["user", "showModal"],
+  props: ["name", "showModal"],
 
   mounted() {
     this.fitPositions();

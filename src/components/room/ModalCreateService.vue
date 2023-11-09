@@ -1,6 +1,6 @@
 <template>
   <AppModal :showed="isActive" title="Создать услугу" @close="close">
-    <form class="form">
+    <form class="form-flex">
       <AppInput v-model="category" placeholder="Категория" title="Категория" />
       <AppInput v-model="name" placeholder="Название" title="Название" />
     </form>
@@ -61,13 +61,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.form {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-}
-</style>

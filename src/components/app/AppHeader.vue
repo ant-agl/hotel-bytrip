@@ -23,7 +23,7 @@
 
     <AppDropDownMenu
       v-show="dropDownMenuIsShowed"
-      :user="user"
+      :name="name"
       :show-modal="showModal"
     />
 
@@ -39,7 +39,7 @@
 
       <div class="buttons">
         <button class="no" @click="hideModal()">Отмена</button>
-        <button class="yes">Выйти</button>
+        <button class="yes" @click="$store.dispatch('logout')">Выйти</button>
       </div>
     </AppModal>
   </header>
@@ -60,13 +60,14 @@ export default {
   data() {
     return {
       dropDownMenuIsShowed: false,
-      user: {
-        name: "Гетьман Михаил Евгеньевич",
-      },
       exitModalIsShowed: false,
     };
   },
-
+  computed: {
+    name() {
+      return this.$store.getters.name ?? "";
+    },
+  },
   methods: {
     showMenu() {
       this.dropDownMenuIsShowed = !this.dropDownMenuIsShowed;

@@ -89,6 +89,14 @@ img {
   max-width: 100%;
 }
 
+.form-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  align-items: flex-start;
+}
+
 .list-move,
 .list-enter-active,
 .list-leave-active {

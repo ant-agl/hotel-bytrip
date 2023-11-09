@@ -7,10 +7,12 @@
         :value="modelValue"
         class="input-text__input"
         :class="{ error: isError }"
-        @input="$emit('update:modelValue', $event.target.value)"
+        @input="inputVal"
         :disabled="disabled"
         :readonly="readonly"
         :placeholder="placeholder"
+        :min="min"
+        :max="max"
       />
       <button v-if="type == 'password'" class="eye" @click.prevent="changeType">
         <img
@@ -38,13 +40,21 @@ export default {
       type: String,
       default: "text",
     },
-    placeholder: String,
+    placeholder: {
+      type: String,
+      default: "",
+    },
     modelValue: [String, Number],
     isError: Boolean,
     errorText: String,
     disabled: Boolean,
     readonly: Boolean,
-    title: String,
+    title: {
+      type: String,
+      default: "",
+    },
+    min: Number,
+    max: Number,
   },
   data: function () {
     return {
@@ -55,6 +65,17 @@ export default {
     changeType() {
       if (this.currentType == "password") this.currentType = "text";
       else this.currentType = "password";
+    },
+    inputVal(e) {
+      let val = e.target.value;
+      if (val != "" && this.type == "number") {
+        val = parseInt(val);
+        if (val < this.min) val = this.min;
+        if (val > this.max) val = this.max;
+      }
+
+      e.target.value = val;
+      this.$emit("update:modelValue", val);
     },
   },
 };
@@ -84,6 +105,7 @@ export default {
     font-size: 14px;
     position: relative;
     z-index: 1;
+    transition: 0.2s;
 
     &:focus {
       outline: none;
