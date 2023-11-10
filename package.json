@@ -21,6 +21,7 @@
     "vue": "^3.3.7",
     "vue-cli": "^2.9.6",
     "vue-router": "^4.0.3",
+    "vue-the-mask": "^0.11.1",
     "vue3-carousel": "^0.3.1",
     "vuex": "^4.0.0"
   },

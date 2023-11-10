@@ -8,6 +8,8 @@
       class="input-code"
     />
 
+    <TryAgain :seconds="60" :active="true" @send="$emit('repeatSend')" />
+
     <div class="btns">
       <AppBtn class="btn_outline" @click.prevent="$emit('back')">Назад</AppBtn>
       <AppBtn type="submit">{{ textBtn }}</AppBtn>
@@ -18,10 +20,11 @@
 <script>
 import InputCode from "@/components/auth/InputCode";
 import AppBtn from "@/components/app/AppBtn";
+import TryAgain from "@/components/auth/TryAgain";
 
 export default {
-  components: { InputCode, AppBtn },
-  emits: ["sendCode", "back"],
+  components: { InputCode, AppBtn, TryAgain },
+  emits: ["sendCode", "back", "repeatSend"],
   props: {
     typeConfirm: {
       type: String,

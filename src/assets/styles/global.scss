@@ -67,6 +67,11 @@ body {
   position: relative;
   cursor: pointer;
 
+  &[disabled] {
+    color: var(--dark-gray);
+    cursor: default;
+  }
+
   &::after {
     content: '';
     display: block;
@@ -80,7 +85,7 @@ body {
     transition: 0.2s;
   }
 
-  &:hover::after {
+  &:not([disabled]):hover::after {
     width: 100%;
   }
 }

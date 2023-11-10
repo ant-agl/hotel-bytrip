@@ -33,6 +33,7 @@
           token = false;
           confirmError = false;
         "
+        @repeatSend="sendForm"
       />
     </AuthContent>
   </Transition>
@@ -129,5 +130,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
