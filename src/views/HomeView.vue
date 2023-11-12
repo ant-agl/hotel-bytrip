@@ -1,5 +1,5 @@
 <template>
-  <main class="router-view">Главное</main>
+  <main class="router-view">Главная</main>
 
   <button @click="show({ message: 'Сообщение об ошибке', type: 'error' })">
     Сообщение об ошибке
