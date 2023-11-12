@@ -87,7 +87,6 @@ export default {
     border-radius: 10px;
     min-width: 500px;
     padding: 1.2em;
-    max-height: 90vh;
     overflow-y: auto;
     display: flex;
     flex-direction: column;

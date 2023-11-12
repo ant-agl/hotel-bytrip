@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import rooms from "./rooms";
 import services from "./services";
+import notifications from "./notifications";
 
 export default createStore({
   state: {
@@ -10,5 +11,5 @@ export default createStore({
   getters: {},
   mutations: {},
   actions: {},
-  modules: { rooms, services },
+  modules: { rooms, services, notifications },
 });

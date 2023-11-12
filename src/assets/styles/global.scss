@@ -1,4 +1,5 @@
 @use "./vars.scss";
+@use "./hint.scss";
 
 @font-face {
   font-family: "Montserrat";
@@ -58,7 +59,8 @@ body {
 
 .router-view {
   width: calc(100% - vars.$app_content--gap - vars.$side_bar--width);
-  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .link {

@@ -32,8 +32,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1em;
-  border-radius: 1.5em;
+  gap: 16px;
+  border-radius: 20px;
   max-width: vars.$side_bar--width;
   padding: 0.8rem;
   background: white;
@@ -42,7 +42,7 @@ export default {
   .hotel-photo {
     width: 100%;
     aspect-ratio: 2;
-    border-radius: 1em;
+    border-radius: 10px;
     background: {
       image: url("../../assets/img/400x200.svg");
       position: center;

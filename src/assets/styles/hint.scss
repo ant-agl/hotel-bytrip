@@ -1,0 +1,33 @@
+.hint-directive {
+  position: absolute;
+  background: gray;
+  background: rgb(255, 255, 255);
+  font-size: 0.7em;
+  padding: 0.3em 0.5em;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 8px;
+  animation: hint-directive-appearance 300ms ease;
+  &.disappearance-animation {
+    animation: hint-directive-disappearance 300ms ease;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes hint-directive-appearance {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hint-directive-disappearance {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}

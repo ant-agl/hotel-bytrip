@@ -1,4 +1,6 @@
 <template>
+  <FastNotificationsPlugin />
+
   <component :is="layout">
     <router-view />
   </component>
@@ -6,6 +8,7 @@
 
 <script>
 import MainLayout from "@/layouts/MainLayout";
+import FastNotificationsPlugin from "@/plugins/FastNotificationsPlugin.vue";
 
 export default {
   computed: {
@@ -15,6 +18,7 @@ export default {
   },
   components: {
     MainLayout,
+    FastNotificationsPlugin,
   },
 };
 </script>
