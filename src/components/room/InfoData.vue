@@ -1,5 +1,5 @@
 <template>
-  <form class="form">
+  <form class="form-flex">
     <AppInput
       v-model.number="countRoom"
       placeholder="Количество создаваемых номеров"
@@ -115,12 +115,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 15px;
-}
-</style>

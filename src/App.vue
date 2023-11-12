@@ -7,18 +7,20 @@
 </template>
 
 <script>
+import EmptyLayout from "@/layouts/EmptyLayout";
 import MainLayout from "@/layouts/MainLayout";
 import FastNotificationsPlugin from "@/plugins/FastNotificationsPlugin.vue";
 
 export default {
-  computed: {
-    layout() {
-      return (this.$route.meta.layout || "main") + "-layout";
-    },
-  },
   components: {
+    EmptyLayout,
     MainLayout,
     FastNotificationsPlugin,
+  },
+  computed: {
+    layout() {
+      return this.$route.meta.layout + "-layout";
+    },
   },
 };
 </script>

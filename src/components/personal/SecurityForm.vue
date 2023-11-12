@@ -9,6 +9,7 @@
       type="text"
       placeholder="Номер телефона"
       title="Телефон"
+      v-mask="'+7 (###) ###-##-##'"
       :user="user"
       :onChange="onChange"
     />
@@ -41,15 +42,18 @@ import DoubleAuthField from "./DoubleAuthField.vue";
 import InputField from "./InputField.vue";
 import AppModal from "../app/AppModal.vue";
 
+import { mask } from "vue-the-mask";
+
 const USER = {
   email: "domain@example.com",
-  phone: "+7928491237",
+  phone: "+79284912374",
   password: "",
   repeatedPassword: "",
   doubleAuth: "none",
 };
 
 export default {
+  directives: { mask },
   data() {
     return {
       successModalIsShowed: false,

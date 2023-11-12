@@ -1,6 +1,6 @@
 <template>
   <AppModal :showed="isActive" title="Добавить тариф" @close="close">
-    <form class="form">
+    <form class="form-flex">
       <AppInput
         :id="'period-' + datepickerToken"
         ref="period"
@@ -146,12 +146,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 15px;
-}
-</style>
