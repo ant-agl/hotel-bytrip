@@ -1,7 +1,6 @@
 import { createStore } from "vuex";
 import rooms from "./rooms";
 import services from "./services";
-import notifications from "./notifications";
 import features from "./features";
 import user from "./user";
 
@@ -13,5 +12,5 @@ export default createStore({
   getters: {},
   mutations: {},
   actions: {},
-  modules: { rooms, services, features, user, notifications },
+  modules: { rooms, services, features, user },
 });

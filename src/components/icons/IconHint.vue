@@ -20,3 +20,14 @@
     </g>
   </svg>
 </template>
+
+<style scoped lang="scss">
+@use "@/assets/styles/vars.scss";
+
+$icon-width: 15px;
+.icon-hint {
+  height: $icon-width;
+  fill: vars.$main--color;
+  cursor: pointer;
+}
+</style>

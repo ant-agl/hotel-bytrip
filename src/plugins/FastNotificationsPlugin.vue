@@ -19,34 +19,65 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+const NOTIFICATION_LIVE_MS = 3000;
+const STEP_MS = 10;
+
+let milliseconds = 0;
+let timer = null;
 
 export default {
-  methods: {
-    ...mapActions(["showNotification"]),
+  data() {
+    return {
+      notifications: [],
+    };
+  },
 
+  methods: {
     getIcon(type) {
       let filename = type == "error" ? "icon_cross.svg" : "icon_arrow.svg";
       return `/img/${filename}`;
     },
   },
 
-  computed: {
-    notifications() {
-      return this.$store.getters.notifications;
-    },
-  },
-
   mounted() {
-    this.showNotification({
-      type: "error",
-      message: "Ошибка",
-    });
+    let notificationsQueue = [];
 
-    this.showNotification({
-      type: "default",
-      message: "Ошибка",
-    });
+    const showNotification = (event) => {
+      let { notification } = event.detail;
+      let key = "k-" + Math.random();
+      notification.key = key;
+      notification.timeout = milliseconds + NOTIFICATION_LIVE_MS;
+
+      notificationsQueue.push(notification);
+      this.notifications.push(...notificationsQueue);
+      notificationsQueue = [];
+
+      if (!timer) {
+        timer = setInterval(() => {
+          if (this.notifications[0].timeout <= milliseconds) {
+            this.notifications.shift();
+          }
+
+          if (this.notifications.length == 0) {
+            clearInterval(timer);
+            timer = null;
+            return;
+          }
+
+          milliseconds += STEP_MS;
+        }, STEP_MS);
+      }
+
+      this.$forceUpdate();
+    };
+
+    document.addEventListener("new_fast_notification", showNotification);
+  },
+  updated() {
+    //prevent sizes changes of disappering fast notification
+    this.$el.style.width = "auto";
+    let maxWidth = this.$el.scrollWidth + 10;
+    this.$el.style.width = maxWidth + "px";
   },
 };
 </script>
@@ -81,6 +112,8 @@ $type_icon--width: 15px;
   flex-direction: column;
   gap: 10px;
   position: fixed;
+  cursor: pointer;
+  user-select: none;
   top: 20px;
   left: 50%;
   transform: translate(-50%, 0);
@@ -90,13 +123,12 @@ $type_icon--width: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
     gap: 10px;
     background: white;
     border-radius: 6px;
     padding: 10px;
     font-size: 0.9em;
-    width: auto;
-    align-self: center;
     box-shadow: 0 0 10px #00000038;
     transition: 300ms ease all;
 
@@ -106,25 +138,10 @@ $type_icon--width: 15px;
       justify-content: center;
       width: $type_icon--width;
       aspect-ratio: 1;
-      line-height: $type_icon--width;
-      border-radius: 100%;
 
       .svg-icon {
-        width: 50%;
+        width: 100%;
         aspect-ratio: 1;
-      }
-    }
-
-    &.error {
-      .type-icon {
-        background: rgb(168, 38, 38);
-      }
-    }
-
-    &.default,
-    &.success {
-      .type-icon {
-        background: rgb(35, 126, 48);
       }
     }
   }

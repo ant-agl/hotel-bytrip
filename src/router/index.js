@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
   const isToken = !!localStorage.token;
   const isRequireAuth = to.meta.auth !== false;
 
-  let isAuth = isToken;
+  let isAuth = true; //isToken;
   if (isToken && store.getters.user.id === undefined) {
     store
       .dispatch("auth")

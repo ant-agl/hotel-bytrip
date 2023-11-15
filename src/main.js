@@ -15,4 +15,13 @@ app.use(FastNotificationsPlugin);
 
 app.directive("hint", hintDirective);
 app.config.globalProperties.$moment = moment;
+app.config.globalProperties.$message = (message) => {
+  let event = new CustomEvent("new_fast_notification", {
+    detail: {
+      notification: message,
+    },
+  });
+
+  document.dispatchEvent(event);
+};
 app.mount("#app");

@@ -1,25 +1,28 @@
 <template>
   <main class="router-view">Главная</main>
 
-  <button @click="show({ message: 'Сообщение об ошибке', type: 'error' })">
+  <button
+    @click="this.$message({ message: 'Сообщение об ошибке', type: 'error' })"
+  >
     Сообщение об ошибке
   </button>
-  <button @click="show({ message: 'Другое сообщение', type: 'success' })">
+  <button
+    @click="this.$message({ message: 'Другое сообщение', type: 'success' })"
+  >
     Сообщение об чем-то ином
   </button>
 
-  <IconHint />
+  <div class="test">
+    <IconHint
+      v-hint="
+        `ПРЛФОООООООООООООООООООООООООООООООО kaskjfhahj w ciuvbjha
+        ajskhfashkflw asfoe ajihgiuyafbihaf a
+        `
+      "
+    />
+  </div>
 </template>
 
-<script>
-import { mapActions } from "vuex";
-
-export default {
-  methods: {
-    ...mapActions(["showNotification"]),
-    show(notification) {
-      this.showNotification(notification);
-    },
-  },
-};
+<script setup>
+import IconHint from "@/components/icons/IconHint.vue";
 </script>
